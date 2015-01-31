@@ -1,0 +1,320 @@
+\documentclass[9pt]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+
+
+
+
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={Introducing the Shell},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=black,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\usepackage{etoolbox}
+
+
+\title{{\Huge Taming math and physics using \texttt{SymPy} }}
+%	A tale of with equations and code}
+%\author{Ivan Savov}
+\author{{\normalsize Tutorial based on the \href{http://minireference.com}{{\sc No bullshit guide}} series of textbooks by \href{mailto:ivan.savov+SYMPYTUT@gmail.com}{Ivan Savov}}}
+\date{\today}
+
+%\usepackage{listings}
+\usepackage{moreverb}
+\usepackage[letterpaper,bmargin=1.1cm,rmargin=0.95cm,lmargin=0.95cm,tmargin=1cm,headsep=0.2cm,footskip=0.5cm]{geometry}
+
+
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+
+\usepackage{ifthen}
+
+\newboolean{TUTORIAL}				% if TUTORIAL==true:
+\setboolean{TUTORIAL}{true}			%     show extra defs and repeats of explanations 
+
+\newboolean{FORLA}				% if FORLA:  show extra content for LA book
+\setboolean{FORLA}{true}			% if not FORLA:  show content for MathPhys book
+
+
+\newcommand{\printcp}{}
+\newcommand{\printni}{}
+
+% doest work
+%\usepackage[titles]{tocloft}
+%\setlength{\cftbeforechapskip}{.1ex}
+%\setlength{\cftbeforesecskip}{-.5ex}
+
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{0}
+\usepackage{setspace}
+%\addtocontents{toc}{\protect\setstretch{-20.1}}
+
+
+
+\begin{document}
+
+
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt \vspace{-1.2mm}}
+\makeatother
+
+
+
+        \maketitle
+
+%\vspace{-2mm}
+
+\begin{abstract}
+Most people consider math and physics to be scary beasts from which it is best to keep one's distance.
+Computers, however, can help us tame the complexity and tedious arithmetic manipulations associated with these subjects.
+Indeed, math and physics are much more approachable once you have the power of computers on your side.
+%
+%Understand math and physics 
+
+This tutorial serves a dual purpose.
+On one hand, it serves as a review of the fundamental concepts of mathematics for computer-literate people.
+%who may have forgotten their math or never quite learned it detail.
+On the other hand, this tutorial serves to demonstrate to students how a computer algebra system 
+can help them with their classwork.
+A word of warning is in order.
+Please don't use \texttt{SymPy} to avoid the suffering associated with your homework!
+Teachers assign homework problems to you
+%not because they want you to suffer but 
+because they want you to learn.
+Do your homework by hand,
+but if you want, you can check your answers using \texttt{SymPy}.
+Better yet, use \texttt{SymPy} to invent extra practice problems for yourself.
+%
+%Let's get started!
+
+%The whole point of homework is for you to suffer.
+%Mathematical skill is developed through mathematical suffering---only 
+%when trying to solve a problem that you haven't solved before will you 
+%be forced to think and practice your skills.
+%Do not use \texttt{SymPy} to cheat on your homework! 
+%You can use \texttt{SymPy} to check your answers though.
+%In fact, one of the best ways to learn math is to 
+% solve them by hand, and then check your answers using \texttt{sympy}.
+
+%Let's kick some mathematical ass!
+
+\end{abstract}
+
+\begin{spacing}{-1}
+\tableofcontents
+\end{spacing}
+
+\input{99.sympy_tutorial.tex}
+
+
+
+
+%=======================================================================  matrices
+\ifthenelse{\boolean{FORLA}}{
+	\input{99.LA_sympy_tutorial.tex}
+}{}
+
+
+
+\vspace{-2mm}
+%=======================================================================  conclusion
+\section*{Conclusion}
+\label{sec:conclusion}
+
+I would like to conclude with some words of caution about the overuse of computers.
+Computer technology is very powerful and is everywhere around us,
+but let's not forget that computers are actually very dumb:
+computers are mere calculators and they depend on your knowledge to direct them.
+It's important that you learn how to do complicated math by hand in order to be 
+able to instruct computers to do math for you and to check the results of your computer calculations.
+I don't want you to use the tricks you learned in this tutorial to avoid math problems from now on
+and simply rely blindly on \texttt{SymPy} for all your math needs.
+I want both you and the computer to become math powerhouses!
+The computer will help you with tedious calculations (they're good at that)
+and you'll help the computer by guiding it when it gets  stuck (humans are good at that).
+
+
+
+
+
+%=======================================================================  links
+\section*{Links}
+\label{sec:links}
+
+[ Installation instructions for \texttt{ipython notebook} ] \\ 
+\href{http://ipython.org/install.html}{\texttt{http://ipython.org/install.html}}
+
+\noindent
+[ The official \texttt{SymPy} tutorial ] \\ 
+\href{http://docs.sympy.org/latest/tutorial/intro.html}{\texttt{http://docs.sympy.org/latest/tutorial/intro.html}}
+
+\noindent
+[ A list of \texttt{SymPy} gotchas ] \\ 
+\href{http://docs.sympy.org/dev/gotchas.html}{\texttt{http://docs.sympy.org/dev/gotchas.html}}
+
+\noindent
+[ SymPy video tutorials by Matthew Rocklin ] \\
+\href{http://pyvideo.org/speaker/583/matthew-rocklin}{\texttt{http://pyvideo.org/speaker/583/matthew-rocklin}}
+
+
+
+
+
+%=======================================================================  book_plug
+\section*{Book plug}
+\label{sec:book_plug}
+
+
+The examples and math explanations in this tutorial are sourced from the 
+{\sc no bullshit guide} series of books published by Minireference~Co.
+We publish textbooks that make math and physics accessible and affordable for everyone.
+If you're interested in %relearning you high school math and 
+learning more about the math, physics, and calculus topics discussed in this tutorial,
+check out the \textbf{No bullshit guide to math and physics}.
+%As the book's author,
+%I'm somewhat biased so I can't give you an objective review.
+The book contains the distilled information that normally comes in two first-year university books:
+the introductory physics book (1000+ pages) and the first-year calculus book (1000+ pages).
+Would you believe me if I told you that you can learn the 
+same material from a single book that is \texttt{1/7}\textsuperscript{th} the size and \texttt{1/10}\textsuperscript{th} of the 
+price of mainstream textbooks?
+
+% It's not a scam, it's just the free market doing its thing. 
+% Until now mainstream publishers pushed their products to the captive audience of students.
+% With eBooks and print-on-demand technology, random Ph.D.'s like me can write books
+% Which book do you trust more? The one written by committee or the one written by a human?
+% 
+
+
+%The fundamental tenet of the Minireference Co. publishing company is the utmost respect for the reader,
+%so we 
+
+\begin{wrapfigure}[18]{r}{0pt}
+\includegraphics[width=135pt,height=207pt]{figures/cover_v40_noline_lite.png}
+%\includegraphics[width=125pt]{/Library/WebServer/Documents/miniref/data/media/physics/mass_spring-highres.png}
+\end{wrapfigure}
+
+    This book contains short lessons on math and physics,
+    written in a style that is jargon-free and to the point.
+    %
+    %    The main focus of the book is to show the intricate connections between the concepts of mechanics and calculus.
+    %
+    Often calculus and mechanics are taught as separate subjects.
+    It shouldn't be like that.
+    If you learn calculus without mechanics, it will be boring.
+    If you learn mechanics without calculus, you won't truly understand what is going on.
+    %
+    This textbook covers both subjects in an integrated manner.
+	%     highlighting the connections between the subjects.
+    
+Contents:
+\begin{itemize}
+  \item {\sc high school math}%: (40pp) %Review of algebra, functions and trigonometry.
+  \item {\sc vectors}%: (20pp) 
+  \item {\sc mechanics} 
+  \item {\sc differential calculus}%: (30pp)
+  \item {\sc integral calculus}%: (20pp)
+  \item 250+ practice problems %: (20pp)
+%  \item {\sc linear algebra}%: (60pp) 
+\end{itemize}
+
+\noindent
+%Available at the \textbf{McGill bookstore.}}{}
+  \hfill {\small   5\textonehalf[in] $\times$ 8\textonehalf[in] $\times$ 445[pages] } 
+
+
+	%Save yourself some time: instead of reading three books you can read just one.
+	%The print version will be available December 1$^{\text{st}}$. 
+	%Get in touch with me by email if you want to buy a copy of the book in print or as a PDF. 
+	%
+	%I will also appreciate it if you send me feedback and comments. 
+	%where I post other tutorials like this one.
+	%Don't hesitate to get in touch with me if you have any questions or feedback: 
+	%. I would also like to hear what you feedback
+	%do you like the style of writing?
+
+	%in which all the material that you normally taught in first year science is explained in a concise manner.        
+
+	%
+	%If you liked this tutorial you can check out the other ones on \url{http://minireference.com}
+	%and order the printed book which has not only formulas but also compact explanations:
+	%\url{http://minireference.com/order_book/}.
+
+
+%
+%Also of interest, 
+
+%The coverage of the math and physics topics in this tutorial were not sufficient
+%to do justice to the subjects. The goal here is to quickly introduce you to the 
+%useful \texttt{SymPy} commands. 
+%
+%you should consider some of my other tutorials on mechanics
+%If you're interested in learning more about calculus and mechanics,
+%you should consider the \emph{No bullshit guide to math and physics}---a short textbook like no other.
+
+\noindent
+For more information, see the book's website %and find more information on the following website 
+at \,  \href{http://minireference.com/}{\texttt{minireference.com}}.
+
+The linear algebra examples presented in Section~\ref{sec:linear_algebra} are 
+sourced from the \href{https://gum.co/noBSLA}{\textbf{No bullshit guide to linear algebra}}.
+Check out the book if you're taking a linear algebra course of if you're missing the prerequisites 
+for learning machine learning, computer graphics, or quantum mechanics.
+
+I'll close on a note for potential readers who suffer from math-phobia.
+Both books start with an introductory chapter that reviews all 
+high school math concepts needed to make math and physics 
+accessible to everyone.
+Don't worry, we'll fix this math-phobia thing right up for you;
+\textbf{when you've got \texttt{SymPy} skills, math fears \emph{you}!}
+
+To stay informed about upcoming titles,
+follow \href{https://twitter.com/minireference}{\texttt{@minireference}} on twitter 
+and check out the facebook page at \href{http://fb.me/noBSguide}{\texttt{fb.me/noBSguide}}.
+%You're also invited to the \textbf{online office hours} where I'll answer 
+%your questions and solve problems from past years' finals\  \   \hfill  \href{http://on.fb.me/1aPxy5w}{\texttt{on.fb.me/1aPxy5w}}
+%For comments, feedback, and questions, you can get in touch with me here \hfill  
+
+
+
+
+\end{document}
+

@@ -1,0 +1,25 @@
+\subsection{Hyperbolic trigonometric functions}
+\label{basics:hyperbolic_trigonometric_functions}
+
+The hyperbolic sine and cosine in \texttt{SymPy} are denoted \texttt{sinh} and \texttt{cosh} respectively
+and \texttt{SymPy} is smart enough to recognize them when simplifying expressions:
+
+\small
+\begin{verbatimtab}
+>>> simplify( (exp(x)+exp(-x))/2 )
+cosh(x)
+>>> simplify( (exp(x)-exp(-x))/2 )
+sinh(x)
+\end{verbatimtab}
+\normalsize
+Recall that $x=\cosh(\mu)$ and $y=\sinh(\mu)$ are defined as $x$ and $y$ coordinates of a point on the 
+the hyperbola with equation $x^2 - y^2 = 1$ and therefore satisfy the identity $\cosh^2 x - \sinh^2 x =1$:
+
+
+
+\small
+\begin{verbatimtab}
+>>> simplify( cosh(x)**2 - sinh(x)**2 )
+1
+\end{verbatimtab}
+\normalsize

@@ -1,0 +1,27 @@
+\noindent
+The exponential function $f(x)=e^x$ is special because it is equal to its derivative:
+
+\small
+\begin{verbatimtab}
+>>> diff( exp(x), x)     # same as diff( E**x, x)
+exp(x)                   # same as E**x
+\end{verbatimtab}
+\normalsize
+
+\noindent
+A differential equation is an equation that relates some unknown function $f(x)$ to its derivative. 
+An example of a differential equation is $f'(x)=f(x)$.
+What is the function $f(x)$ which is equal to its derivative?
+You can either try to guess what $f(x)$ is or use the \texttt{dsolve} function:
+
+\small
+\begin{verbatimtab}
+>>> x = symbols('x')
+>>> f = symbols('f', cls=Function)        # can now use f(x)
+>>> dsolve( f(x) - diff(f(x),x), f(x) )
+f(x) == C1*exp(x)
+\end{verbatimtab}
+\normalsize
+
+\noindent
+We'll discuss \texttt{dsolve} again in the section on mechanics.

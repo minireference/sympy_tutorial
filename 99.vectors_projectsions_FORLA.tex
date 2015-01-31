@@ -1,0 +1,64 @@
+	
+
+\vspace{-4mm}
+
+	
+\subsection{Projections}
+\label{vectors:projections}
+
+\vspace{-2mm}
+
+Dot products are used for computing projections.
+Assume you're given two vectors $\vec{u}$ and $\vec{n}$ and you want to find the component
+of $\vec{u}$ that points in the $\vec{n}$ direction.
+The following formula based on the dot product will give you the answer:
+\[
+ \Pi_{\vec{n}}( \vec{u} ) \equiv \frac{  \vec{u} \cdot \vec{n}  }{ \| \vec{n} \|^2 } \vec{n}.
+\]
+
+\vspace{-2mm}
+
+\noindent
+This is how to implement this formula in \texttt{SymPy}:
+\small
+\begin{verbatimtab}
+>>> u = Matrix([4,5,6])
+>>> n = Matrix([1,1,1])
+>>> (u.dot(n) / n.norm()**2)*n
+[5, 5, 5]                      # projection of v in the n dir
+\end{verbatimtab}
+\normalsize
+
+\noindent
+In the case where the direction vector $\hat{n}$ is of unit length $\|\hat{n}\| = 1$,
+the projection formula simplifies to $\Pi_{\hat{n}}( \vec{u} ) \equiv (\vec{u}\cdot\hat{n})\hat{n}$.
+
+
+Consider now the plane $P$ defined by $(1,1,1)\cdot[(x,y,z)-(0,0,0)]=0$.
+A plane is a two dimensional subspace of $\mathbb{R}^3$.
+We can decompose any vector $\vec{u} \in \mathbb{R}^3$ into two parts $\vec{u}=\vec{v} + \vec{w}$
+such that $\vec{v}$ lies inside the plane and $\vec{w}$ is perpendicular to the plane (parallel to $\vec{n}=(1,1,1)$).
+
+To obtain the perpendicular-to-$P$ component of $\vec{u}$,
+compute the projection of $\vec{u}$ in the direction $\vec{n}$:
+\small
+\begin{verbatimtab}
+>>> w = (u.dot(n) / n.norm()**2)*n
+[5, 5, 5]
+\end{verbatimtab}
+\normalsize
+
+\noindent
+To obtain the in-the-plane-$P$ component of $\vec{u}$,
+start with $\vec{u}$ and subtract the perpendicular-to-$P$ part:
+\small
+\begin{verbatimtab}
+>>> v = u - (u.dot(n)/n.norm()**2)*n      # same as u - w
+[ -1, 0, 1]
+\end{verbatimtab}
+\normalsize
+
+\noindent
+You should check on your own that $\vec{v}+\vec{w}=\vec{u}$ as claimed.
+
+\vspace{-5mm}

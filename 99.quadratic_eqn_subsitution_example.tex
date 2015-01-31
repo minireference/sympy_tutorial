@@ -1,0 +1,13 @@
+To solve a specific equation like $x^2+2x-8=0$,
+we can substitute the coefficients $a=1$, $b=2$, and $c=-8$ into 
+the general solution to obtain the same result:
+
+\small
+\begin{verbatimtab}
+>>> gen_sol = solve( a*x**2 + b*x + c, x)
+>>> [ gen_sol[0].subs({'a':1,'b':2,'c':-8}), 
+      gen_sol[1].subs({'a':1,'b':2,'c':-8})  ]
+[2, -4]
+\end{verbatimtab}
+\normalsize
+
