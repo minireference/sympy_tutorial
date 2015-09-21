@@ -1,4 +1,4 @@
-%!TEX root = noBSguideMathMechCalc.tex
+I%!TEX root = noBSguideMathMechCalc.tex
 
 %\input{99.sympy_tutorial.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1895,7 +1895,7 @@ If the acceleration function is constant over time $a(t)=a$.
 We find $v(t)$ and $x(t)$ as follows:
 \small
 \begin{verbatimtab}
->>> t, a, v_i, x_i = symbols('t v_i x_i a')
+>>> t, a, v_i, x_i = symbols('t a v_i x_i')
 >>> v = v_i + integrate(a, (t, 0,t) )
 >>> v
 a*t + v_i
