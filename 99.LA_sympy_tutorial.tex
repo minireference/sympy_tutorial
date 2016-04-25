@@ -99,22 +99,28 @@ Recall that the transpose is also used to convert row vectors into column vector
 \small
 \begin{verbatimtab}
 >>> M = eye(3)
->>> M.row_op(1, lambda v,j: v+3*M[0,j] )
+>>> M[1,:] = M[1,:] + 3*M[0,:]
 >>> M
 [1, 0, 0]
 [3, 1, 0]
-[0, 0, 1]
-\end{verbatimtab}
+[0, 0, 1] \end{verbatimtab}
 \normalsize
 
-The method \texttt{row\_op} takes two arguments as inputs:
-the first argument specifies the $0$-based index of the row you want to act on,
-while the second argument is a function of the form \texttt{f(val,j)}
-that describes how you want the value \texttt{val=M[i,j]} to be transformed.
-The above call to \texttt{row\_op} implements the row operation $R_2 \gets R_2 + 3R_1$.
+The notation \texttt{M[i,:]} refers to entire rows of the matrix.
+The first argument specifies the $0$-based row index,
+for example the first row of~\texttt{M} is \texttt{M[0,:]}.
+The code example above implements the row operation $R_2 \gets R_2 + 3R_1$.
+To scale a row \texttt{i} by constant \texttt{c}, use the command \texttt{ M[i,:] = c*M[i,:]}.
+To swap rows \texttt{i} and \texttt{j}, use can use the \texttt{Python} tuple-assignment syntax \texttt{ M[i,:], M[j,:] = M[j,:], M[i,:]}.
+%The method \texttt{row\_op} takes two arguments as inputs:
+%the first argument specifies the $0$-based index of the row you want to act on,
+%while the second argument is a function of the form \texttt{f(val,j)}
+%that describes how you want the value \texttt{val=M[i,j]} to be transformed.
+% The above call to \texttt{row\_op} implements the row operation $R_2 \gets R_2 + 3R_1$.
 %The expression \texttt{lambda  a,b: a+b} is the \texttt{Python} syntax for creating an anonymous function with arguments
 %\texttt{a} and \texttt{b}, which computes their sum \texttt{a+b}.
 
+\vspace{-2mm}
 
 \subsection{Reduced row echelon form}
 \label{matrices:reduced_row_echelon_form}
@@ -152,6 +158,7 @@ To get just the RREF of $A$, select the $0$\textsuperscript{th} entry form the t
 %\end{verbatimtab}
 %\normalsize
 
+\vspace{-2mm}
 
 
 \subsection{Matrix fundamental spaces}
