@@ -26,10 +26,9 @@
 \section*{Introduction}
 % \label{sec:sympytut_introduction}
 
-You can use a computer algebra system (CAS)
-to compute complicated math expressions, 
-solve equations, 
-perform calculus procedures, 
+You can use a computer algebra system (CAS) to compute complicated math expressions,
+solve equations,
+perform calculus procedures,
 and simulate physics systems.
 
 All computer algebra systems offer essentially the same functionality,
@@ -113,12 +112,13 @@ To exit the python shell press \texttt{CTRL+D}.
 %\end{verbatimtab}
 %\normalsize
 
-I highly recommend you also install \texttt{ipython}, 
+I highly recommend you also install \texttt{ipython},
 which is an improved interactive python shell.
-If you have \texttt{ipython} and \texttt{SymPy} installed, 
+If you have \texttt{ipython} and \texttt{SymPy} installed,
 you can start an \texttt{ipython} shell with \texttt{SymPy} pre-imported using the command \texttt{isympy}.
-For an even better experience, 
-you can try \texttt{ipython notebook}, which is a web frontend for the \texttt{ipython} shell.
+For an even better experience,
+you can try \texttt{jupyter notebook},
+which is a web frontend for the \texttt{ipython} shell.
 
 Each section \ifthenelse{\boolean{TUTORIAL}}{of this tutorial}{in this appendix} begins with a python \texttt{import} statement
 for the functions used in that section.
@@ -148,7 +148,7 @@ We'll learn the \texttt{SymPy} equivalents of
 ``to solve'' (an equation),  
 %``to simplify'' (an expression), 
 ``to expand'' (an expression), 
-``to factor'' (a polynomial). 
+``to factor'' (a polynomial).
 
 \subsection{Numbers}
 \label{basics:numbers}
@@ -208,7 +208,7 @@ To avoid this problem, you can force \texttt{float} division by using the number
 \normalsize
 
 \noindent
-This result is better, but it's still only an approximation of the exact number $\frac{1}{7} \in \mathbb{Q}$, 
+This result is better, but it's still only an approximation of the exact number $\frac{1}{7} \in \mathbb{Q}$, 					\index{fraction}
 since a \texttt{float} has 16 decimals while the decimal expansion of $\frac{1}{7}$ is infinitely long. 
 To obtain an \emph{exact} representation of $\frac{1}{7}$ you need to create a \texttt{SymPy} expression.
 You can \texttt{sympify} any expression using the shortcut function \texttt{S()}:
@@ -227,7 +227,7 @@ a \texttt{SymPy} object divided by an \texttt{int} is a \texttt{SymPy} object.
 Except for the tricky \texttt{Python} division operator, 
 other math operators like addition \texttt{+}, subtraction \texttt{-}, 
 and multiplication \texttt{*} work as you would expect.
-The syntax \texttt{**} is used in \texttt{Python} to denote exponentiation:
+The syntax \texttt{**} is used in \texttt{Python} to denote exponentiation:											\index{exponent}
 \small
 \begin{verbatimtab}
 >>> 2**10                    # same as S('2^10')
@@ -255,7 +255,7 @@ pi
 The method \texttt{.n()} is equivalent to \texttt{.evalf()}.
 The global \texttt{SymPy} function \texttt{N()} can also be used to to compute numerical values.
 %
-You can easily change the number of digits of precision of the approximation.
+You can easily change the number of digits of precision of the approximation.										\index{precision}
 Enter \texttt{pi.n(400)} to obtain an approximation of $\pi$ to 400 decimals.
 
 \subsection{Symbols}
@@ -272,7 +272,7 @@ Python is a civilized language so there's no need to define variables before ass
 When you write \texttt{a = 3}, you define a new name \texttt{a} and set it to the value \texttt{3}.
 You can now use the name \texttt{a} in  subsequent calculations.
 
-Most interesting \texttt{SymPy} calculations require us to define \texttt{symbols}, 
+Most interesting \texttt{SymPy} calculations require us to define \texttt{symbols},
 which are the \texttt{SymPy} objects for representing variables and unknowns.
 For your convenience, when \href{http://live.sympy.org}{\texttt{live.sympy.org}} starts,
 it runs the following commands automatically:
@@ -363,8 +363,7 @@ and is useful in multi-step calculations:
 \normalsize
 
 \noindent
-You define \texttt{SymPy} expressions by combining symbols
-with basic math operations and other functions: 
+You define \texttt{SymPy} expressions by combining symbols with basic math operations and other functions: 
 
 \small
 \begin{verbatimtab}
@@ -380,6 +379,8 @@ The examples below illustrate other useful \texttt{SymPy} functions
 that correspond to common mathematical operations on expressions: 
 %COMMENT: do you mean 'or' expressions? @SANDY: no, operations like factor, expand, etc, act  on math expressions
 
+																								\index{factoring} \index{expand} \index{collect}
+
 \small
 \begin{verbatimtab}
 >>> factor( x**2-2*x-8 )
@@ -392,7 +393,7 @@ x**2 + (a+b)*x + a*b     # collect terms for diff. pows of x
 \normalsize
 
 \noindent
-To substitute a given value into an expression,
+To substitute a given value into an expression,																\index{substitution}
 call the \texttt{.subs()} method, passing in a python dictionary object \texttt{\{ key:val, ... \}} 
 with the symbol--value substitutions you want to make:
 
@@ -476,9 +477,9 @@ You should be able to recognize the expressions in the solution---it's the quadr
 \bigskip
 
 \noindent
-To solve a \emph{system of equations}, you can feed \texttt{solve} with the list of equations
-as the first argument, and specify the list of unknowns you want to solve for as the second argument.
-For example, to solve for $x$ and $y$ in the system of equations $x+y =3$ and $3x-2y=0$, use
+To solve a \emph{system of equations},
+you can feed \texttt{solve} with the list of equations as the first argument, and specify the list of unknowns you want to solve for as the second argument.
+For example, to solve for $x$ and $y$ in the system of equations $x+y=3$ and $3x-2y=0$, use
 
 \small
 \begin{verbatimtab}
@@ -491,7 +492,7 @@ For example, to solve for $x$ and $y$ in the system of equations $x+y =3$ and $3
 
 \noindent
 The function \texttt{solve} is like a Swiss Army knife you can use to solve all kind of problems.
-Suppose you want to \emph{complete the square} in the expression $x^2-4x+7$,
+Suppose you want to \emph{complete the square} in the expression $x^2-4x+7$,								\index{completing the square}
 that is, you want to find constants $h$ and $k$ such that $x^2-4x+7 = (x-h)^2 +k$.
 There is no special ``complete the square'' function in \texttt{SymPy},
 but you can call \texttt{solve} on the equation $(x-h)^2 +k \ - \  (x^2-4x+7) = 0$
@@ -524,7 +525,7 @@ and you'll never need to suffer another tedious arithmetic calculation painstaki
 
 \noindent
 By default, \texttt{SymPy} will not combine or split rational expressions.
-You need to use \texttt{together} to symbolically calculate the addition of fractions:
+You need to use \texttt{together} to symbolically calculate the addition of fractions:									\index{fraction}
 
 \small
 \begin{verbatimtab}
@@ -551,13 +552,14 @@ x - 1  +  6/(x + 2)
 \subsection{Exponentials and logarithms}
 \label{basics:exponentials_and_logarithms}
 
-Euler's constant $e=2.71828\ldots$ is defined one of several ways,
+																								\index{exponential} \index{logarithm}
+Euler's number $e=2.71828\ldots$ is defined one of several ways,												\index{Euler's!number}
 \[
   e \equiv \lim_{n\to \infty} \left( 1 + \frac{1}{n}\right)^{n}
     \equiv \lim_{\epsilon \to 0} \left( 1 + \epsilon\right)^{1/\epsilon}
     \equiv \sum_{n=0}^\infty \frac{1}{n!},
 \]
-and is denoted \texttt{E} in \texttt{SymPy}. 
+and is denoted \texttt{E} in \texttt{SymPy}.
 Using \texttt{exp(x)} is equivalent to \texttt{E**x}.
 
 The functions \texttt{log} and \texttt{ln} both compute the logarithm base $e$:
@@ -571,7 +573,7 @@ The functions \texttt{log} and \texttt{ln} both compute the logarithm base $e$:
 
 \noindent
 By default, \texttt{SymPy} assumes the inputs to functions like \texttt{exp} and \texttt{log} are complex numbers,
-so it will not expand certain logarithmic expressions. 
+so it will not expand certain logarithmic expressions.
 However, indicating to \texttt{SymPy} that the inputs are positive real numbers will make the expansions work:
 
 \small
@@ -587,9 +589,7 @@ log(a) + log(b)
 \subsection{Polynomials}
 \label{basics:polynomials}
 
-Let's define a polynomial $P$ with roots at $x=1$, $x=2$, and $x=3$:
-
-
+Let's define a polynomial $P$ with roots at $x=1$, $x=2$, and $x=3$:											\index{polynomial}
 
 \small
 \begin{verbatimtab}
@@ -600,8 +600,8 @@ Let's define a polynomial $P$ with roots at $x=1$, $x=2$, and $x=3$:
 \normalsize
 
 \noindent
-To see the expanded version of the polynomial, 
-call its \texttt{expand} method:
+To see the expanded version of the polynomial,
+call its \texttt{expand} method:																			\index{expand}
 
 \small
 \begin{verbatimtab}
@@ -612,10 +612,10 @@ x**3 - 6*x**2 + 11*x - 6
 
 \noindent
 When the polynomial is expressed in it's expanded form $P(x)=x^3-6^2 + 11x - 6$,
-we can't immediately identify its roots. 
+we can't immediately identify its roots.
 This is why the factored form $P(x)=(x-1)(x-2)(x-3)$ is preferable.
-To factor a polynomial, 
-call its \texttt{factor} method or \texttt{simplify} it:
+To factor a polynomial,
+call its \texttt{factor} method or \texttt{simplify} it:															\index{factoring}
 
 \small
 \begin{verbatimtab}
@@ -680,9 +680,7 @@ from sympy import sin, cos, tan, trigsimp, expand_trig
 \normalsize
 
 \noindent
-The trigonometric functions \texttt{sin} and \texttt{cos} take inputs in radians: 
-
-
+The trigonometric functions \texttt{sin} and \texttt{cos} take inputs in radians: 					\index{radian} \index{sine} \index{cosine}
 
 \small
 \begin{verbatimtab}
@@ -735,7 +733,7 @@ The function \texttt{acos} returns angles in the range $[0,\pi]$,
 while \texttt{asin} and \texttt{atan} return angles in the range $[-\frac{\pi}{2},\frac{\pi}{2}]$.
 
 
-Here are some trigonometric identities that \texttt{SymPy} knows:
+Here are some trigonometric identities that \texttt{SymPy} knows:												\index{trigonometric identities}
 
 \small
 \begin{verbatimtab}
@@ -787,7 +785,7 @@ sin(2*x)
 %=======================================================================  complex_numbers
 \lesection{Complex numbers}
 \label{sec:sympytut_complex_numbers}
-
+																							\index{complex number}
 \small
 \begin{verbatimtab}
 >>> from sympy import I, re, im, Abs, arg, conjugate
@@ -847,10 +845,8 @@ Complex numbers contain a real part and an imaginary part:
 \noindent
 The \emph{polar} representation of a complex number is $z\!\equiv\!|z|\angle\theta\!\equiv \!|z|e^{i\theta}$.
 For a complex number $z=a+bi$, 
-the quantity $|z|=\sqrt{a^2+b^2}$ is known as the absolute value of $z$,
+the quantity $|z|=\sqrt{a^2+b^2}$ is known as the \emph{absolute value} of $z$,				
 and $\theta$ is its \emph{phase} or its \emph{argument}:
-
-
 
 \small
 \begin{verbatimtab}
@@ -879,7 +875,7 @@ Complex conjugation is important for computing the absolute value of $z$
 
 \subsection{Euler's formula}
 \label{complex_numbers:euler_s_formula}
-
+																								\index{Euler's!formula}
 \small
 \begin{verbatimtab}
 >>> from sympy import expand, rewrite
@@ -959,7 +955,7 @@ from sympy import oo
 \normalsize
 
 \noindent
-The infinity symbol is denoted \texttt{oo} (two lowercase \texttt{o}s) in \texttt{SymPy}.
+The infinity symbol is denoted \texttt{oo} (two lowercase \texttt{o}s) in \texttt{SymPy}.						\index{infinity}
 Infinity is not a number but a process: the process of counting forever.
 Thus, $\infty + 1 = \infty$, 
 $\infty$ is greater than any finite number,
@@ -986,7 +982,7 @@ from sympy import limit
 \normalsize
 
 \noindent
-We use limits to describe, with mathematical precision, infinitely large quantities,
+We use limits to describe, with mathematical precision, infinitely large quantities,						\index{limit}
 infinitely small quantities, and procedures with infinitely many steps.
 
 The number $e$ is defined as the limit
@@ -999,13 +995,10 @@ E          # = 2.71828182845905
 \normalsize
 
 \noindent
-This limit expression describes the annual growth rate of a loan with 
-a nominal interest rate of $100\%$ and infinitely frequent compounding.
-%If you 
-Borrow $\$1000$ in such a scheme, and 
- % on January 1\textsuperscript{st},
-you'll owe $\$2718.28$ after one~year.
-
+This limit expression describes the annual growth rate of a loan
+with a nominal interest rate of $100\%$ and infinitely frequent compounding.							\index{interest rate}
+Borrow $\$1000$ in such a scheme,
+and you'll owe $\$2718.28$ after one~year.
 
 Limits are also useful to describe the behaviour of functions.
 Consider the function $f(x)=\frac{1}{x}$.
@@ -1052,7 +1045,7 @@ Limits are used to define the derivative and the integral operations.
 
 \subsection{Derivatives}
 \label{calculus:derivatives}
-The derivative function, denoted $f'(x)$, $\frac{d}{dx}f(x)$, $\frac{df}{dx}$, or $\frac{dy}{dx}$, 
+The derivative function, denoted $f'(x)$, $\frac{d}{dx}f(x)$, $\frac{df}{dx}$, or $\frac{dy}{dx}$, 								\index{derivative}
 describes the \emph{rate of change} of the function $f(x)$.
 The \texttt{SymPy} function \texttt{diff} computes the derivative of any expression:
 
@@ -1104,7 +1097,7 @@ The second derivative of a function \texttt{f} is \texttt{diff(f,x,2)}:
 \subsection{Tangent lines}
 \label{calculus:tangent_lines}
 
-The \emph{tangent line} to the function $f(x)$ at $x=x_0$ is 
+The \emph{tangent line} to the function $f(x)$ at $x=x_0$ is 													\index{tangent line}
 the line that passes through the point $(x_0, f(x_0))$ and has 
 the same slope as the function at that point.
 The tangent line to the function $f(x)$ at the point $x=x_0$ is described by the equation
@@ -1147,10 +1140,11 @@ True
 
 \subsection{Optimization}
 \label{calculus:optimization}
+																								\index{optimization}
 
 \ifthenelse{\boolean{TUTORIAL}}{
 
-	Optimization is about choosing an input for a function $f(x)$ that results in the best value for $f(x)$.
+	Optimization is about choosing an input for a function $f(x)$ that results in the best value for $f(x)$.					
 	The best value usually means the \emph{maximum} value 
 	(if the function represents something desirable like profits) 
 	or the \emph{minimum} value 
@@ -1174,10 +1168,8 @@ True
 	
 }
 
-Let's find the critical points of the function $f(x)=x^3-2x^2+x$ 
-and use the information from its second derivative 
-to find the maximum of the function 
-on the interval $x \in [0,1]$.
+Let's find the critical points of the function $f(x)=x^3-2x^2+x$ and use the information from its second derivative 			\index{critical point}
+to find the maximum of the function on the interval $x \in [0,1]$.													\index{maximum}
 
 \small
 \begin{verbatimtab}
@@ -1200,7 +1192,7 @@ on the interval $x \in [0,1]$.
 The point $x=\frac{1}{3}$ is a local maximum because it is a critical point of $f(x)$
 where the curvature is negative, meaning $f(x)$ looks like the peak of a mountain at $x=\frac{1}{3}$.
 The maximum value of $f(x)$ on the interval $x\in [0,1]$ is $f\!\left(\frac{1}{3}\right)=\frac{4}{27}$.
-The point $x=1$ is a local minimum because it is a critical point
+The point $x=1$ is a local minimum because it is a critical point													\index{minimum}
 with positive curvature, meaning $f(x)$ looks like the bottom of a valley at $x=1$.
 
 
@@ -1211,25 +1203,23 @@ with positive curvature, meaning $f(x)$ looks like the bottom of a valley at $x=
 
 \ifthenelse{\boolean{TUTORIAL}}{
 
-The \emph{integral} of $f(x)$ corresponds to the computation of the area under the graph of $f(x)$.
+The \emph{integral} of $f(x)$ corresponds to the computation of the area under the graph of $f(x)$.						\index{area}
 The area under $f(x)$ between the points $x=a$ and $x=b$ is denoted as follows:
 \[
  A(a,b) = \int_a^b f(x) \: dx.
 \]
-The \emph{integral function} $F$ corresponds to the area calculation as a function 
-of the upper limit of integration:
+The \emph{integral function} $F$ corresponds to the area calculation as a function of the upper limit of integration:
 \[
   F(c) \equiv \int_0^c \! f(x)\:dx\,.
 \]
-The area under $f(x)$ between $x=a$ and $x=b$ is obtained by 
-calculating the \emph{change} in the integral function:
+The area under $f(x)$ between $x=a$ and $x=b$ is obtained by calculating the \emph{change} in the integral function:
 \[
    A(a,b) = \int_a^b \! f(x)\:dx  =  F(b)-F(a).
 \]
 
 }{}
 
-In \texttt{SymPy} we use \texttt{integrate(f, x)} to obtain the integral function $F(x)$ of any function $f(x)$:
+In \texttt{SymPy} we use \texttt{integrate(f, x)} to obtain the integral function $F(x)$ of any function $f(x)$:					\index{integral}
 $F(x) = \int_0^x f(u)\,du$.
 
 \small
@@ -1292,9 +1282,9 @@ Draw a graph of $\sin(x)$ to see what is going on.
 
 \subsection{Fundamental theorem of calculus}
 \label{calculus:fundamental_theorem_of_calculus}
-
+																								\index{fundamental theorem of calculus}
 The integral is the ``inverse operation'' of the derivative.
-If you perform the integral operation followed by the derivative operation on some function, 
+If you perform the integral operation followed by the derivative operation on some function,
 you'll obtain the same function:
 \[
   \left(\frac{d}{dx} \circ \int dx \right) f(x) \equiv \frac{d}{dx} \int_c^x f(u)\:du = f(x).
@@ -1341,7 +1331,7 @@ we can take the integral on both sides of the equation to obtain the answer $f(x
 \subsection{Sequences}
 \label{calculus:sequences}
 
-Sequences are functions that take whole numbers as inputs.
+Sequences are functions that take whole numbers as inputs.												\index{sequence}
 Instead of continuous inputs $x\in \mathbb{R}$,
 sequences take natural numbers $n\in\mathbb{N}$ as inputs.
 We denote sequences as $a_n$ instead of the usual function notation $a(n)$.
@@ -1404,20 +1394,18 @@ What happens to the terms in the sequence when $n$ becomes large?
 \normalsize
 
 \noindent
-Both $a_n=\frac{1}{n}$ and $b_n = \frac{1}{n!}$ \emph{converge} to $0$ as $n\to\infty$. 
+Both $a_n=\frac{1}{n}$ and $b_n = \frac{1}{n!}$ \emph{converge} to $0$ as $n\to\infty$.							\index{convergence}
 
 \medskip
 
 Many important math quantities are defined as limit expressions.
-An interesting example to consider is the number $\pi$, 
-which is defined as the area of a circle of radius $1$.
+An interesting example to consider is the number $\pi$,
+which is defined as the area of a circle of radius $1$.														\index{circle}
 We can approximate the area of the unit circle by drawing a many-sided regular polygon around the circle.
 Splitting the $n$-sided regular polygon into identical triangular splices,
 we can obtain a formula for its area $A_n$\ifthenelse{\boolean{TUTORIAL}}{}{ (see solution to \textbf{P\ref{mathprob:octagon-approx-to-circle}})}.
 In the limit as $n\to \infty$, 
 the $n$-sided-polygon approximation to the area of the unit-circle becomes exact:
-
-
 
 \small
 \begin{verbatimtab}
@@ -1426,16 +1414,19 @@ the $n$-sided-polygon approximation to the area of the unit-circle becomes exact
 pi
 \end{verbatimtab}
 \normalsize
+
+
 \subsection{Series}
 \label{calculus:series}
 
 Suppose we're given a sequence $a_n$ and we want to compute the sum of all the values in this sequence $\sum_{n}^\infty a_n$.
-Series are sums of sequences.
+Series are sums of sequences.																		\index{series}
 Summing the values of a sequence $a_n:\mathbb{N}\to \mathbb{R}$
 is analogous to taking the integral of a function $f:\mathbb{R}\to \mathbb{R}$.
 
 To work with series in \texttt{SymPy},
-use the \texttt{summation} function whose syntax is analogous to the \texttt{integrate} function: 
+use the \texttt{summation} function whose syntax is analogous to the \texttt{integrate} function: 						\index{summation}
+																							\index{sequence!harmonic}
 
 \small
 \begin{verbatimtab}
@@ -1449,7 +1440,8 @@ E
 \normalsize
 
 \noindent
-We say the series $\sum a_n$ \emph{diverges} to infinity (or \emph{is divergent}) while the series $\sum b_n$ converges (or \emph{is convergent}).
+We say the series $\sum a_n$ \emph{diverges} to infinity (or \emph{is divergent})								\index{divergence}
+while the series $\sum b_n$ converges (or \emph{is convergent}).											\index{convergence}
 As we sum together more and more terms of the sequence $b_n$, the total becomes closer and closer to some finite number.
 In this case, the infinite sum $\sum_{n=0}^\infty \frac{1}{n!}$ converges to the number $e=2.71828\ldots$.
 
@@ -1479,7 +1471,7 @@ Wait, there's more!
 Not only can we use series to approximate numbers,
 we can also use them to approximate functions.
 
-A \emph{power series} is a series whose terms contain different powers of the variable $x$.
+A \emph{power series} is a series whose terms contain different powers of the variable $x$.						\index{Taylor series}
 The $n$\textsuperscript{th} term in a power series is a function of both the sequence index $n$ and the input variable $x$.
 
 For example, the power series of the function $\exp(x)=e^x$ is 
@@ -1529,12 +1521,12 @@ that is accurate to $16$ decimals:
 \normalsize
 
 \noindent
-The coefficients in the power series of a function (also known as the \emph{Taylor series}) % or \emph{Maclaurin series}) 
+The coefficients in the power series of a function (also known as the \emph{Taylor series})
 depend on the value of the higher derivatives of the function. 
 The formula for the $n$\textsuperscript{th} term in the Taylor series of $f(x)$ expanded at $x=c$ is $a_n(x) = \frac{f^{(n)}(c)}{n!}(x-c)^n$,
 where $f^{(n)}(c)$ is the value of the $n$\textsuperscript{th} derivative of $f(x)$ evaluated at $x=c$.
 %The term \emph{Taylor series} applies to all series expansions of functions.
-The term \emph{Maclaurin series} refers to Taylor series expansions at $x=0$.
+The term \emph{Maclaurin series} refers to Taylor series expansions at $x=0$.										\index{Maclaurin series}
 
 The \texttt{SymPy} function \texttt{series} is a convenient way to obtain the series of any function.
 Calling \texttt{series(expr,var,at,nmax)} 
@@ -1599,7 +1591,7 @@ x - x**2/2 + x**3/3 - x**4/4 + x**5/5 + O(x**6)
 \lesection{Vectors}
 \label{sec:sympytut_vectors}
 
-A vector $\vec{v} \in \mathbb{R}^n$ is an $n$-tuple of real numbers. 
+A vector $\vec{v} \in \mathbb{R}^n$ is an $n$-tuple of real numbers. 										\index{vector}
 For example, consider a vector that has three components:  
 \[
  \vec{v} = (v_1,v_2,v_3) \  \in \  (\mathbb{R},\mathbb{R},\mathbb{R}) \equiv \mathbb{R}^3.
@@ -1614,9 +1606,9 @@ Because of this equivalence between vectors and matrices,
 there is no need for a special vector object in \texttt{SymPy}, 
 and \texttt{Matrix} objects are used for vectors as well.
 
-This is how we define vectors %in \texttt{SymPy} 
-and compute their properties:
-
+This is how we define vectors and compute their properties:											\index{length}
+																						\index{unit vector}
+																						
 \small
 \begin{verbatimtab}
 >>> u = Matrix([[4,5,6]]) # a row vector = 1x3 matrix
@@ -1630,7 +1622,7 @@ Matrix([[7, 8, 9]])       # convert a col vec to a row vec
 4
 >>> u.norm()              # length of u 
 sqrt(77)
->>> uhat = u/u.norm()     # unit-length vec in same dir as u
+>>> uhat = u/u.norm()     # unit vector in same dir as u
 >>> uhat
 [4/sqrt(77), 5/sqrt(77), 6/sqrt(77)]
 >>> uhat.norm()
@@ -1644,7 +1636,7 @@ sqrt(77)
 \subsection{Dot product}
 \label{vectors:dot_product}
 
-The dot product of the $3$-vectors $\vec{u}$ and $\vec{v}$ can be defined two ways:
+The dot product of the $3$-vectors $\vec{u}$ and $\vec{v}$ can be defined two ways:						\index{dot product}
 \[
   \vec{u}\cdot\vec{v}
   	\equiv 
@@ -1667,7 +1659,7 @@ In \texttt{SymPy},
 
 \noindent
 We can combine the algebraic and geometric formulas for the dot product
-to obtain the cosine of the angle between the vectors 
+to obtain the cosine of the angle between the vectors
 \[
     \cos(\varphi)
         = \frac{ \vec{u}\cdot\vec{v} }{  \|\vec{u}\|\|\vec{v}\| }
@@ -1719,7 +1711,8 @@ True
 \subsection{Cross product}
 \label{vectors:cross_product}
 
-The \emph{cross product}, denoted $\times$, takes two vectors as inputs and produces a vector as output.
+The \emph{cross product}, denoted $\times$,															\index{cross product}
+takes two vectors as inputs and produces a vector as output.
 The cross products of individual basis elements are defined as follows:
 \[
  \hat{\imath}\times\hat{\jmath} =\hat{k}, \qquad
@@ -1740,7 +1733,7 @@ Here is how to compute the cross product of two vectors in \texttt{SymPy}:
 
 \noindent
 The vector $\vec{u}\times \vec{v}$ is orthogonal to both $\vec{u}$ and $\vec{v}$.
-The norm of the cross product  $\|\vec{u}\times \vec{v}\|$ is proportional to the lengths of the vectors 
+The norm of the cross product  $\|\vec{u}\times \vec{v}\|$ is proportional to the lengths of the vectors
 and the sine of the angle between them:
 \small
 \begin{verbatimtab}
@@ -1783,7 +1776,7 @@ The dot product is anti-commutative $\vec{u}\times\vec{v} = -\vec{v}\times\vec{u
 \normalsize
 
 \noindent
-The product of two numbers and the dot product of two vectors are commutative operations.
+The product of two numbers and the dot product of two vectors are commutative operations.					\index{commutative}
 The cross product, however, is not commutative: $\vec{u}\times\vec{v} \neq \vec{v}\times\vec{u}$.
 
 
@@ -1805,11 +1798,10 @@ and the vector operations you learned in the previous sections are powerful enou
 \label{mechanics:dynamics}
 
 The net force acting on an object is the sum of all the external forces acting on it $\vec{F}_{\textrm{net}} = \sum \vec{F}$.
-Since forces are vectors, 
+Since forces are vectors,																		\index{force}
 we need to use vector addition to compute the net force.
 
-Compute %the net force 
-$\vec{F}_{\textrm{net}}=\vec{F}_1 + \vec{F}_2$,
+Compute $\vec{F}_{\textrm{net}}=\vec{F}_1 + \vec{F}_2$,
 where $\vec{F}_1=4\hat{\imath}$[N] and $\vec{F}_2 = 5\angle 30^\circ$[N]:
 \small
 \begin{verbatimtab}
@@ -1843,7 +1835,7 @@ The net force on the object is $\vec{F}_{\textrm{net}}= 8.697\angle 16.7^\circ$[
 \subsection{Kinematics}
 \label{mechanics:kinematics}
 
-Let $x(t)$ denote the position of an object,
+Let $x(t)$ denote the position of an object,															\index{kinematics}
 $v(t)$ denote its velocity,
 and $a(t)$ denote its acceleration.
 Together $x(t)$, $v(t)$, and $a(t)$ are known as the \emph{equations of motion} of the object.
@@ -1876,7 +1868,7 @@ Together $x(t)$, $v(t)$, and $a(t)$ are known as the \emph{equations of motion} 
 }{
 
 	Starting from the knowledge of $\vec{F}_{\textrm{net}}$,
-	we can compute $a(t)=\frac{ \vec{F}_{\textrm{net}} }{ m }$, 
+	we can compute $a(t)=\frac{ \vec{F}_{\textrm{net}} }{ m }$,
 	then obtain $v(t)$ by integrating $a(t)$, and finally obtain $x(t)$ by integrating $v(t)$:
 	\[
 	\underbrace{\frac{ \vec{F}_{\textrm{net}} }{ m }  = a(t)}_{\textrm{Newton's 2\textsuperscript{nd} law}} 
@@ -1907,8 +1899,9 @@ a*t**2/2 + v_i*t + x_i
 
 \noindent
 You may remember these equations from 
-\ifthenelse{\boolean{TUTORIAL}}{your high school physics class.}{Section~\ref{sec:kinematics_with_calculus} (page~\pageref{sec:kinematics_with_calculus}).}
-They are the \emph{uniform accelerated motion} (UAM) equations:
+\ifthenelse{\boolean{TUTORIAL}}{your high school physics class.}
+{Section~\ref{sec:kinematics_with_calculus} (page~\pageref{sec:kinematics_with_calculus}).}
+They are the \emph{uniform accelerated motion} (UAM) equations:							\index{uniformly accelerated motion}
 \begin{align*}
  a(t) &= a,                                  \\ 
  v(t) &= v_i  + at,                          \\[-2mm] 
@@ -1936,7 +1929,7 @@ After moving the term $2ax_f$ to the other side of the equation, we obtain
  (v(t))^2 \ = \ v_f^2 =  v_i^2  + 2a\Delta x \ = \  v_i^2  + 2a(x_f-x_i).
 \end{align*}  
 The fourth equation is important for practical purposes
-because it allows us to solve physics problems in a time-less manner. %COMMENT: a timeless manner? %TODO: explain "without using the time variable" 
+because it allows us to solve physics problems without using the time variable.
 %It's also important for theoretical purposes
 %since it resembles an \emph{energy calculation}.
 %Indeed, if you multiply the fourth equation by $\frac{1}{2}m$,
@@ -2009,12 +2002,13 @@ If you move an object against a conservative force (think raising a ball in the 
 you can think of the work you do agains the force as being stored in the potential energy of the object.
 }{}
 
-For each force $\vec{F}(x)$ there is a corresponding potential energy $U_F(x)$.
+For each force $\vec{F}(x)$ there is a corresponding potential energy $U_F(x)$.					\index{potential energy} \index{energy!potential} 
 The change in potential energy associated with the force $\vec{F}(x)$ and displacement $\vec{d}$
-is defined as the negative of the work done by the force during the displacement: $U_F(x) = - W = - \int_{\vec{d}} \vec{F}(x)\cdot d\vec{x}$.
+is defined as the negative of the work done by the force during the displacement:					\index{work} \index{force}
+$U_F(x) = - W = - \int_{\vec{d}} \vec{F}(x)\cdot d\vec{x}$.
 
-The potential energies associated with gravity $\vec{F}_g = -mg\hat{\jmath}$
-and the force of a spring $\vec{F}_s = -k\vec{x}$ are calculated as follows:
+The potential energies associated with gravity $\vec{F}_g = -mg\hat{\jmath}$						\index{gravitational potential energy}
+and the force of a spring $\vec{F}_s = -k\vec{x}$ are calculated as follows:						\index{spring potential energy}
 
 \small
 \begin{verbatimtab}
@@ -2039,7 +2033,7 @@ the work done by the force is negative.
 
 \subsection{Simple harmonic motion}
 \label{mechanics:simple_harmonic_motion}
-
+																				\index{simple harmonic motion}
 \small
 \begin{verbatimtab}
 from sympy import Function, dsolve
@@ -2095,8 +2089,7 @@ we obtain the form $x(t)=C_1\sin(\omega t)+C_2 \cos(\omega t)$ that \texttt{SymP
 
 \subsubsection{Conservation of energy}
 
-We can verify that the total energy of the mass-spring system is conserved by showing 
-$E_T(t) = U_s(t) + K(t) = \textrm{constant}$: 
+We can verify that the total energy of the mass-spring system is conserved by showing $E_T(t) = U_s(t) + K(t) = \textrm{constant}$: 
 
 \small
 \begin{verbatimtab}
@@ -2122,6 +2115,7 @@ A*cos(t*w)
 \printcp
 \vspace{-2mm}
 
+
 %=======================================================================  conclusion
 \section*{Conclusion}
 % \label{sec:sympytut_conclusion}
@@ -2130,7 +2124,7 @@ A*cos(t*w)
 	Computer technology is very powerful and is everywhere around us,
 	but we must not forget that computers are actually very dumb.
 	Computers are merely calculators, and they depend on your knowledge to direct them.
-	It's important you learn how to perform complicated math by hand in order to be able to 
+	It's important you learn how to perform complicated math by hand in order to be able to
 	instruct computers to execute math for you, and so you can check the results of your computer calculations.
 	I don't want you to use the tricks you learned in this tutorial to avoid math problems
 	and blindly rely on \texttt{SymPy} for all your math needs. That won't work!
@@ -2142,25 +2136,24 @@ A*cos(t*w)
 	When solving a math problem, if you clearly define each variable,
 	draw a diagram, and clearly set up the problem's equations in terms of the variables you defined,
 	then half the work of solving the problem is done.
-	%
-	Computers can't help with these important, initial modelling and problem-specific tasks---only humans are good at this stuff.
-	%	The British like to call this ``wrapping one's head around the problem.''
-	Once you \emph{set up} the problem, 
+	Computers can't help with these important,
+	initial modelling and problem-specific tasks---only humans are good at this stuff.
+	Once you \emph{set up} the problem,
 	\texttt{SymPy} can help you breeze through tedious calculations.
-	%
 	The combination of pen and paper for thinking and \texttt{SymPy} for calculating is indeed quite powerful.
 	Go out there and do some science!
 	
 	% ---- using sympy shoulders of giants, but understanding the equations  makes you a math giant!
 	
 
+
 %=======================================================================  links
 \section*{Links}
 % \label{sec:sympytut_links}
 
-[ Installation instructions for \texttt{ipython notebook} ] \\ 
-\href{http://ipython.org/install.html}{\texttt{http://ipython.org/install.html}}
-% TODO: update to link to jupyter notebook...
+[ Installation instructions for \texttt{jupyter notebook} ] \\ 
+\href{https://jupyter.readthedocs.io/en/latest/install.html}
+	{\texttt{https://jupyter.readthedocs.io/en/latest/install.html}}
 
 \medskip
 \noindent
@@ -2178,13 +2171,4 @@ A*cos(t*w)
 
 
 
-% TODO: include linear algebra parts even in math phys book --- plug LA book
-
-
-
-
-
-
-
-
-
+% TODOv6: include linear algebra parts even in math phys book --- plug LA book ---- Jul 14: vetoing this idea bcs would add too many pages
