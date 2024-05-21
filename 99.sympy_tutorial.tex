@@ -1,4 +1,4 @@
-%!TEX root = noBSguideMathMechCalc.tex
+%!TEX root = sympy_tutorial.tex
 
 %\input{99.sympy_tutorial.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +36,7 @@ so it doesn't matter which system you use:
 there are free systems like \texttt{SymPy}, \texttt{Magma}, or \texttt{Octave}, 
 and commercial systems like \texttt{Maple}, \texttt{MATLAB}, and \texttt{Mathematica}.
 This tutorial is an introduction to \texttt{SymPy},
-which is a \emph{symbolic} computer algebra system written in the programming language \texttt{Python}. 
+which is a \emph{symbolic} computer algebra system written in the programming language Python. 
 In a symbolic CAS, 
 numbers and operations are represented symbolically, so the answers obtained are exact.
 For example, the number $\sqrt{2}$ is represented in \texttt{SymPy} as the object \texttt{Pow(2,1/2)},
@@ -62,7 +62,7 @@ Later we'll see how to use vectors and integrals to understand Newtonian mechani
 }{}
 
 
-This tutorial presents many explanations as blocks of code. 
+This tutorial presents many explanations as code snippets.
 Be sure to try the code examples on your own by typing the commands into \texttt{SymPy}.
 It's always important to verify for yourself!
 %Don't be a passive reader: 
@@ -82,43 +82,43 @@ You'll be presented with an interactive prompt into which
 you can enter your commands---right in your browser. 
 
 If you want to use \texttt{SymPy} on your own computer,
-you must install \texttt{Python} and the python package \texttt{sympy}.
-You can then open a command prompt and start a \texttt{SymPy} session using:
+you must first install Python and the Python package \texttt{sympy}.
+You can then open a command prompt and start a Python session using:
 
 
 
 \small
 \begin{verbatimtab}
-you@host$ python
+you@host> python
 Python X.Y.Z 
 [GCC a.b.c (Build Info)] on platform
 Type "help", "copyright", or "license" for more information.
+>>> 
+\end{verbatimtab}
+\normalsize
+
+\noindent
+The \texttt{>{}>{}>} prompt indicates you're in the Python shell which accepts Python commands.
+Type the following in the Python shell:
+
+\small
+\begin{verbatimtab}
 >>> from sympy import *
 >>> 
 \end{verbatimtab}
 \normalsize
 
 \noindent
-The \texttt{>{}>{}>} prompt indicates you're in the \texttt{Python} shell which accepts \texttt{Python} commands.
 The command \texttt{from sympy import *}$\;$ imports all the \texttt{SymPy} functions into the current namespace. 
 All \texttt{SymPy} functions are now available to you.
-%
 To exit the python shell press \texttt{CTRL+D}. 
-%
-%\small
-%\begin{verbatimtab}
-%>>>  ( press CTRL + D )
-%you@host$  
-%\end{verbatimtab}
-%\normalsize
 
-I highly recommend you also install \texttt{ipython},
-which is an improved interactive python shell.
-If you have \texttt{ipython} and \texttt{SymPy} installed,
-you can start an \texttt{ipython} shell with \texttt{SymPy} pre-imported using the command \texttt{isympy}.
 For an even better experience,
-you can try \texttt{jupyter notebook},
-which is a web frontend for the \texttt{ipython} shell.
+you can try \texttt{JupyterLab},
+which is a web interface for accessing the Python shell.
+Click \href{https://github.com/jupyterlab/jupyterlab-desktop#jupyterlab-desktop}{here}
+to download the JupyterLab Desktop application.
+
 
 Each section \ifthenelse{\boolean{TUTORIAL}}{of this tutorial}{in this appendix} begins with a python \texttt{import} statement
 for the functions used in that section.
@@ -160,7 +160,7 @@ We'll learn the \texttt{SymPy} equivalents of
 \normalsize
 
 \noindent
-In \texttt{Python}, there are two types of number objects: \texttt{int}s and \texttt{float}s.%
+In Python, there are two types of number objects: \texttt{int}s and \texttt{float}s.
 
 \small
 \begin{verbatimtab}
@@ -170,51 +170,45 @@ In \texttt{Python}, there are two types of number objects: \texttt{int}s and \te
 3.0                           # a float 
 \end{verbatimtab}
 \normalsize
-Integer objects in \texttt{Python} are a faithful representation of the set of integers $\mathbb{Z}=\{\ldots,-2,-1,0,1,2,\ldots\}$.
-Floating point numbers are approximate representations of the reals $\mathbb{R}$.
-%The name ``floating point'' comes from the fact that \texttt{float}s can represent very small numbers 
-%and very large numbers (by moving the decimal point).
-Regardless of its absolute size, 
-a floating point number is only accurate to 16 decimals.
-% you can think of floats as rational numbers of the form $\frac{m}{10^n}$ where $m<10^{16}$ and $< n <$.
 
-%We won't go any further into the implementation details of how numbers are represented;
-%I just wanted to point out the difference between \texttt{int}s, \texttt{float}s, 
-%and the set of real numbers $\mathbb{R}$. 
-%Sandy said: these lines could be more fitting for a teacher's guide, but I think for students it is TMI, since the differences are explained concisely and neatly above.
+	\noindent
+	Integer objects in Python are a faithful representation of the set of integers $\mathbb{Z}=\{\ldots,-2,-1,0,1,2,\ldots\}$.
+	Floating point numbers are approximate representations of the reals $\mathbb{R}$.
+	%The name ``floating point'' comes from the fact that \texttt{float}s can represent very small numbers 
+	%and very large numbers (by moving the decimal point).
+	A floating point number has 16 decimals of precision.
+	% you can think of floats as rational numbers of the form $\frac{m}{10^n}$ where $m<10^{16}$ and $< n <$.
+	
+	%We won't go any further into the implementation details of how numbers are represented;
+	%I just wanted to point out the difference between \texttt{int}s, \texttt{float}s, 
+	%and the set of real numbers $\mathbb{R}$. 
+	%Sandy said: these lines could be more fitting for a teacher's guide, but I think for students it is TMI, since the differences are explained concisely and neatly above.
 
 
-% Floats are only approximations, but if you want to do calculations with floats you can use the GPU
+	% Floats are only approximations, but if you want to do calculations with floats you can use the GPU
  
-Special care is required when specifying rational numbers,
-because integer division might not produce the answer you want.
-In other words, 
-\texttt{Python} will not automatically convert the answer to a floating point number,
-but instead round the answer to the closest integer:
+	Special care is required when specifying rational numbers
+	if you want to get exact answers.
+	If you try to divide two numbers,
+	Python will produce a floating point number approximation:
 \small
 \begin{verbatimtab}
 >>> 1/7
-0                             # int/int gives int 
+0.14285714285714285           # a float
 \end{verbatimtab}
 \normalsize
+	
+	\noindent
+	The floating point number $0.14285714285714285$ is an approximation of the exact number $\frac{1}{7} \in \mathbb{Q}$. 	\index{fraction}
+	The \texttt{float} approximation has 16 decimals
+	while the decimal expansion of $\frac{1}{7}$ is infinitely long.
+	To obtain an \emph{exact} representation of $\frac{1}{7}$,
+	you need to create a \texttt{SymPy} expression.
+	You can \texttt{sympify} any expression using the shortcut function \texttt{S()}:
 
-\noindent
-To avoid this problem, you can force \texttt{float} division by using the number \texttt{1.0} instead of \texttt{1}:
 \small
 \begin{verbatimtab}
->>> 1.0/7
-0.14285714285714285           # float/int gives float
-\end{verbatimtab}
-\normalsize
-
-\noindent
-This result is better, but it's still only an approximation of the exact number $\frac{1}{7} \in \mathbb{Q}$, 					\index{fraction}
-since a \texttt{float} has 16 decimals while the decimal expansion of $\frac{1}{7}$ is infinitely long. 
-To obtain an \emph{exact} representation of $\frac{1}{7}$ you need to create a \texttt{SymPy} expression.
-You can \texttt{sympify} any expression using the shortcut function \texttt{S()}:
-\small
-\begin{verbatimtab}
-S('1/7')
+>>> S('1/7')                  # = sympify('1/7')
 1/7                           # = Rational(1,7)
 \end{verbatimtab}
 \normalsize
@@ -224,10 +218,10 @@ Note the input to \texttt{S()} is specified as a text string delimited by quotes
 We could have achieved the same result using \texttt{S('1')/7} since
 a \texttt{SymPy} object divided by an \texttt{int} is a \texttt{SymPy} object.
 
-Except for the tricky \texttt{Python} division operator, 
-other math operators like addition \texttt{+}, subtraction \texttt{-}, 
-and multiplication \texttt{*} work as you would expect.
-The syntax \texttt{**} is used in \texttt{Python} to denote exponentiation:											\index{exponent}
+	Except for the tricky Python division operator, 
+	other math operators like addition \texttt{+}, subtraction \texttt{-}, 
+	and multiplication \texttt{*} work as you would expect.
+	The syntax \texttt{**} is used to denote exponentiation:				\index{exponent}
 \small
 \begin{verbatimtab}
 >>> 2**10                    # same as S('2^10')
@@ -246,7 +240,7 @@ call  its \texttt{.evalf()} method: %Sandy said: what do you mean by 'call'?
 \begin{verbatimtab}
 >>> pi
 pi
->>> pi.evalf()
+>>> pi.evalf()               # = pi.n() = N(pi)
 3.14159265358979
 \end{verbatimtab}
 \normalsize
@@ -279,7 +273,6 @@ it runs the following commands automatically:
 
 \small
 \begin{verbatimtab}
->>> from __future__ import division
 >>> from sympy import *
 >>> x, y, z, t = symbols('x y z t')
 >>> k, m, n = symbols('k m n', integer=True)
@@ -288,10 +281,8 @@ it runs the following commands automatically:
 \normalsize
 
 \noindent
-The first statement instructs python to convert \texttt{1/7} to \texttt{1.0/7} when dividing,
-potentially saving you from any \texttt{int} division confusion.
-The second statement imports all the \texttt{SymPy} functions.
-The remaining statements define some generic symbols \texttt{x}, \texttt{y}, \texttt{z}, and \texttt{t},
+The first statement imports all the \texttt{SymPy} functions.
+The other three statements define some generic symbols \texttt{x}, \texttt{y}, \texttt{z}, and \texttt{t},
 and several other symbols with special properties.
 
 Note the difference between the following two statements:
@@ -333,24 +324,11 @@ You can define a sequence of variables using the following notation:
 \noindent
 You can use any name you want for a variable,
 but it's best if you avoid the letters \texttt{Q,C,O,S,I,N} and \texttt{E} because they have special uses in \texttt{SymPy}:
-\texttt{I} is the unit imaginary number $i\equiv\sqrt{-1}$, 
+\texttt{I} is the unit imaginary number $i\eqdef\sqrt{-1}$, 
 \texttt{E} is the base of the natural logarithm,
 \texttt{S()} is the \texttt{sympify} function,
 \texttt{N()} is used to obtain numeric approximations, and
 \texttt{O} is used for big-\texttt{O} notation.
-
-The underscore symbol \texttt{\char`_} is a special variable that contains the result of the last printed value.
-The variable \texttt{\char`_} is analogous to the \texttt{ans} button on certain calculators,
-and is useful in multi-step calculations:
-
-\small
-\begin{verbatimtab}
->>> 3+3
-6
->>> _*2
-12
-\end{verbatimtab}
-\normalsize
 
 
 \subsection{Expressions}
@@ -368,7 +346,7 @@ You define \texttt{SymPy} expressions by combining symbols with basic math opera
 \small
 \begin{verbatimtab}
 >>> expr = 2*x + 3*x - sin(x) - 3*x + 42
->>> simplify(expr)
+>>> simplify(expr)                   # simplify the expression
 2*x - sin(x) + 42
 \end{verbatimtab}
 \normalsize
@@ -377,18 +355,17 @@ You define \texttt{SymPy} expressions by combining symbols with basic math opera
 The function \texttt{simplify} can be used on any expression to simplify it.
 The examples below illustrate other useful \texttt{SymPy} functions
 that correspond to common mathematical operations on expressions: 
-%COMMENT: do you mean 'or' expressions? @SANDY: no, operations like factor, expand, etc, act  on math expressions
 
 																								\index{factoring} \index{expand} \index{collect}
 
 \small
 \begin{verbatimtab}
->>> factor( x**2-2*x-8 )
+>>> factor( x**2-2*x-8 )             # factor a polynomial
 (x - 4)*(x + 2)
->>> expand( (x-4)*(x+2) )
+>>> expand( (x-4)*(x+2) )            # expand and expression
 x**2 - 2*x - 8
->>> collect(x**2 + x*b + a*x + a*b, x)
-x**2 + (a+b)*x + a*b     # collect terms for diff. pows of x 
+>>> collect(x**2 + x*b + a*x + a*b, x)    # collect like terms
+x**2 + (a+b)*x + a*b
 \end{verbatimtab}
 \normalsize
 
@@ -399,12 +376,12 @@ with the symbol--value substitutions you want to make:
 
 \small
 \begin{verbatimtab}
->>> expr  = sin(x) + cos(y)
+>>> expr  = sin(x) + cos(y)          # define an expression
 >>> expr
 sin(x) + cos(y)
->>> expr.subs({x:1, y:2})
+>>> expr.subs({x:1, y:2})            # subs. x=1,y=1 in expr
 sin(1) + cos(2)
->>> expr.subs({x:1, y:2}).n()
+>>> expr.subs({x:1, y:2}).n()        # compute numeric value
 0.425324148260754
 \end{verbatimtab}
 \normalsize
@@ -467,9 +444,9 @@ we can solve all possible equations of the form $ax^2 + bx+c=0$ using the follow
 
 \noindent
 In this case \texttt{solve} calculated the solution in terms of the symbols \texttt{a}, \texttt{b}, and \texttt{c}.
-You should be able to recognize the expressions in the solution---it's the quadratic formula $x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+You should be able to recognize the expressions in the solution---it's the quadratic formula $x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.				\index{quadratic!formula}
 
-\ifthenelse{\boolean{TUTORIAL}}{  
+\ifthenelse{\boolean{TUTORIAL}}{
 	\input{99.quadratic_eqn_subsitution_example.tex}
 }{} 
 
@@ -495,15 +472,15 @@ The function \texttt{solve} is like a Swiss Army knife you can use to solve all 
 Suppose you want to \emph{complete the square} in the expression $x^2-4x+7$,								\index{completing the square}
 that is, you want to find constants $h$ and $k$ such that $x^2-4x+7 = (x-h)^2 +k$.
 There is no special ``complete the square'' function in \texttt{SymPy},
-but you can call \texttt{solve} on the equation $(x-h)^2 +k \ - \  (x^2-4x+7) = 0$
+but you can call \texttt{solve} on the equation $(x-h)^2 +k \; - \;  (x^2-4x+7) = 0$
 to find the unknowns $h$ and $k$:
 
 \small
 \begin{verbatimtab}
 >>> h, k = symbols('h k')
 >>> solve( (x-h)**2 + k  - (x**2-4*x+7), [h,k] )
-[(2, 3)]                               # so h = 2 and k = 3
->>> ((x-2)**2+3).expand()              # verify...
+[(2, 3)]                              # so h = 2 and k = 3
+>>> expand((x-2)**2+3)                # verify...
 x**2 - 4*x + 7
 \end{verbatimtab}
 \normalsize
@@ -525,7 +502,7 @@ and you'll never need to suffer another tedious arithmetic calculation painstaki
 
 \noindent
 By default, \texttt{SymPy} will not combine or split rational expressions.
-You need to use \texttt{together} to symbolically calculate the addition of fractions:									\index{fraction}
+You need to use \texttt{together} to symbolically calculate the addition of fractions:
 
 \small
 \begin{verbatimtab}
@@ -552,12 +529,12 @@ x - 1  +  6/(x + 2)
 \subsection{Exponentials and logarithms}
 \label{basics:exponentials_and_logarithms}
 
-																								\index{exponential} \index{logarithm}
+																			\index{logarithm}
 Euler's number $e=2.71828\ldots$ is defined one of several ways,												\index{Euler's!number}
 \[
-  e \equiv \lim_{n\to \infty} \left( 1 + \frac{1}{n}\right)^{n}
-    \equiv \lim_{\epsilon \to 0} \left( 1 + \epsilon\right)^{1/\epsilon}
-    \equiv \sum_{n=0}^\infty \frac{1}{n!},
+  e = \lim_{n\to \infty} \left( 1 + \frac{1}{n}\right)^{n}
+    = \lim_{\epsilon \to 0} \left( 1 + \epsilon\right)^{1/\epsilon}
+    = \sum_{n=0}^\infty \frac{1}{n!},
 \]
 and is denoted \texttt{E} in \texttt{SymPy}.
 Using \texttt{exp(x)} is equivalent to \texttt{E**x}.
@@ -579,10 +556,10 @@ However, indicating to \texttt{SymPy} that the inputs are positive real numbers 
 \small
 \begin{verbatimtab}
 >>> x, y = symbols('x y')
->>> log(x*y).expand()
+>>> expand(log(x*y))
 log(x*y)
 >>> a, b = symbols('a b', positive=True)
->>> log(a*b).expand()
+>>> expand(log(a*b))
 log(a) + log(b)
 \end{verbatimtab}
 \normalsize
@@ -605,7 +582,7 @@ call its \texttt{expand} method:																			\index{expand}
 
 \small
 \begin{verbatimtab}
->>> P.expand()
+>>> expand(P)
 x**3 - 6*x**2 + 11*x - 6
 \end{verbatimtab}
 \normalsize
@@ -619,9 +596,9 @@ call its \texttt{factor} method or \texttt{simplify} it:															\index{fa
 
 \small
 \begin{verbatimtab}
->>> P.factor()
+>>> factor(P)
 (x - 1)*(x - 2)*(x - 3)
->>> P.simplify()
+>>> simplify(P)
 (x - 1)*(x - 2)*(x - 3)
 \end{verbatimtab}
 \normalsize
@@ -645,27 +622,29 @@ We can use the \texttt{solve} function to find the roots of the polynomial:
 \subsection{Equality checking}
 \label{basics:equality_checking}
 
-In the last example, we used the \texttt{simplify} function to check whether two expressions were equal.
+In the last example,
+we used the \texttt{simplify} function on the difference of two expressions to check whether they were equal.
 This way of checking equality works because $P=Q$ if and only if $P-Q=0$.
-This is the best way to check if two expressions are equal in \texttt{SymPy}
+To know whether $P=Q$, we can calculate \texttt{simplify(P-Q)} and see if the result equals $0$.
+This is the best way to check whether two expressions are equal in \texttt{SymPy}
 because it attempts all possible simplifications when comparing the expressions.
 Below is a list of other ways to check whether two quantities are equal
-with example cases where they fail:
+with example cases where equality fails to be detected:
 
 \small
 \begin{verbatimtab}
->>> p = (x-5)*(x+5)
->>> q = x**2 - 25
->>> p == q                                      # fail
+>>> P = (x-5)*(x+5)
+>>> Q = x**2 - 25
+>>> P == Q                                    # fails
 False
->>> p - q == 0                                  # fail 
+>>> P - Q == 0                                # fails
 False
->>> simplify(p - q) == 0          
-True
->>> sin(x)**2 + cos(x)**2  == 1                 # fail
+>>> simplify(P - Q)                           # works
+0
+>>> sin(x)**2 + cos(x)**2  == 1               # fails
 False
->>> simplify( sin(x)**2 + cos(x)**2 - 1 ) == 0
-True
+>>> simplify( sin(x)**2 + cos(x)**2 - 1 )     # works
+0
 \end{verbatimtab}
 \normalsize
 
@@ -703,8 +682,8 @@ you need a conversion factor of $\frac{\pi}{180}$[rad/$^\circ$]:
 \normalsize
 
 \noindent
-The inverse trigonometric functions $\sin^{-1}(x)\equiv \arcsin(x)$
-and $\cos^{-1}(x)\equiv \arccos(x)$ are used as follows:
+The inverse trigonometric functions $\sin^{-1}(x) = \arcsin(x)$
+and $\cos^{-1}(x) = \arccos(x)$ are used as follows:
 
 \small
 \begin{verbatimtab}
@@ -714,8 +693,8 @@ pi/6
 pi/6
 \end{verbatimtab}
 \normalsize
-Recall that $\tan(x) \equiv \frac{\sin(x)}{\cos(x)}$.
-The inverse function of $\tan(x)$ is $\tan^{-1}(x)\equiv \arctan(x)\equiv$ \texttt{atan(x)}
+Recall that $\tan(x) = \frac{\sin(x)}{\cos(x)}$,
+while the inverse function of $\tan(x)$ is $\tan^{-1}(x) = \arctan(x) =$ \texttt{atan(x)}
 
 
 
@@ -732,6 +711,7 @@ pi/6
 The function \texttt{acos} returns angles in the range $[0,\pi]$,
 while \texttt{asin} and \texttt{atan} return angles in the range $[-\frac{\pi}{2},\frac{\pi}{2}]$.
 
+% TODOv6: mention atan2
 
 Here are some trigonometric identities that \texttt{SymPy} knows:												\index{trigonometric identities}
 
@@ -766,9 +746,9 @@ you should use \texttt{expand\_trig}, because the default \texttt{expand} won't 
 
 \small
 \begin{verbatimtab}
->>> expand(sin(2*x))        # = (sin(2*x)).expand()
+>>> expand(sin(2*x))
 sin(2*x)
->>> expand_trig(sin(2*x))   # = (sin(2*x)).expand(trig=True)
+>>> expand_trig(sin(2*x))   # = expand(sin(2*x), trig=True)
 2*sin(x)*cos(x)
 \end{verbatimtab}
 \normalsize
@@ -843,7 +823,7 @@ Complex numbers contain a real part and an imaginary part:
 \normalsize
 
 \noindent
-The \emph{polar} representation of a complex number is $z\!\equiv\!|z|\angle\theta\!\equiv \!|z|e^{i\theta}$.
+The \emph{polar} representation of a complex number is $z=|z|\angle\theta\! = \!|z|e^{i\theta}$.
 For a complex number $z=a+bi$, 
 the quantity $|z|=\sqrt{a^2+b^2}$ is known as the \emph{absolute value} of $z$,				
 and $\theta$ is its \emph{phase} or its \emph{argument}:
@@ -858,9 +838,8 @@ atan(3/4)
 \normalsize
 
 \noindent
-The complex conjugate of $z=a+bi$ is the number $\bar{z} = a-bi$:
-
-
+The complex conjugate of $z=a+bi$ is the number $\overline{z} = a-bi$,
+which has the same absolute value as $z$ but opposite phase:
 
 \small
 \begin{verbatimtab}
@@ -871,7 +850,7 @@ The complex conjugate of $z=a+bi$ is the number $\bar{z} = a-bi$:
 
 \noindent
 Complex conjugation is important for computing the absolute value of $z$
-($|z|\equiv\sqrt{ z\bar{z} }$) and for division by $z$ ($\frac{1}{z} \equiv \frac{\bar{z}}{|z|^2}$).
+($|z|\eqdef\sqrt{ z\overline{z} }$) and for division by $z$ ($\frac{1}{z} = \frac{\overline{z}}{|z|^2}$).
 
 \subsection{Euler's formula}
 \label{complex_numbers:euler_s_formula}
@@ -892,7 +871,7 @@ and also tell \texttt{expand} that you're interested in complex expansions:
 \small
 \begin{verbatimtab}
 >>> x = symbols('x', real=True)
->>> exp(I*x).expand(complex=True)
+>>> expand(exp(I*x), complex=True)
 cos(x) + I*sin(x) 
 >>> re( exp(I*x) ) 
 cos(x)
@@ -908,31 +887,6 @@ Whaaat?
 I know it's weird,
 but weird things are bound to happen when you input imaginary numbers to functions.
 
-%	\href{https://en.wikipedia.org/wiki/Euler's_identity}{Euler's identity} is Euler's formula with $x=\pi$:  
-%	$e^{i\pi} = \cos \pi + i\sin \pi = - 1$,
-%	which we can rewrite as $e^{i\pi} + 1=0$.
-%	Let's check that \texttt{SymPy} knows about Euler's identity:
-%	\small
-%	\begin{verbatimtab}
-%	>>> (exp(I*pi) + 1).expand(complex=True)
-%	0
-%	\end{verbatimtab}
-%	\normalsize
-
-Euler's formula is often used to rewrite the functions $\sin$ and $\cos$ in terms of complex exponentials.
-For example,
-
-\small
-\begin{verbatimtab}
->>> (cos(x)).rewrite(exp)
-exp(I*x)/2 + exp(-I*x)/2
-\end{verbatimtab} 
-\normalsize
-
-\noindent
-Compare this expression with the definition of hyperbolic cosine. 
-%function $\cosh(x) \equiv \frac{1}{2}(e^x+e^{-x})$.
-%Funky stuff, I know...
 
 %=======================================================================  calculus
 \lesection{Calculus}
@@ -986,7 +940,7 @@ We use limits to describe, with mathematical precision, infinitely large quantit
 infinitely small quantities, and procedures with infinitely many steps.
 
 The number $e$ is defined as the limit
-$\displaystyle e \equiv \lim_{n\to \infty} \left( 1 + \frac{1}{n}\right)^{n}$:
+$\displaystyle e \eqdef \lim_{n\to \infty} \left( 1 + \frac{1}{n}\right)^{n}$:
 \small
 \begin{verbatimtab}
 >>> limit( (1+1/n)**n, n, oo)
@@ -1059,7 +1013,7 @@ The \texttt{SymPy} function \texttt{diff} computes the derivative of any express
 \normalsize
 
 \noindent
-The differentiation operation knows about the product rule $[f(x)g(x)]^\prime=f^\prime(x)g(x)+f(x)g^\prime(x)$, 
+The differentiation operation knows the product rule $[f(x)g(x)]^\prime=f^\prime(x)g(x)+f(x)g^\prime(x)$, 
 the chain rule $f(g(x))' = f'(g(x))g'(x)$, 
 and the quotient rule $\left[\frac{f(x)}{g(x)}\right]^\prime = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$:
 
@@ -1102,7 +1056,7 @@ the line that passes through the point $(x_0, f(x_0))$ and has
 the same slope as the function at that point.
 The tangent line to the function $f(x)$ at the point $x=x_0$ is described by the equation
 \[
-   T_1(x) =  f(x_0) \ + \  f'(x_0)(x-x_0).
+   T_1(x) =  f(x_0) \; + \;  f'(x_0)(x-x_0).
 \]
 What is the equation of the tangent line to $f(x)=\frac{1}{2}x^2$ at $x_0=1$?
 
@@ -1210,7 +1164,7 @@ The area under $f(x)$ between the points $x=a$ and $x=b$ is denoted as follows:
 \]
 The \emph{integral function} $F$ corresponds to the area calculation as a function of the upper limit of integration:
 \[
-  F(c) \equiv \int_0^c \! f(x)\:dx\,.
+  F(c) \eqdef \int_0^c \! f(x)\:dx\,.
 \]
 The area under $f(x)$ between $x=a$ and $x=b$ is obtained by calculating the \emph{change} in the integral function:
 \[
@@ -1247,7 +1201,7 @@ Use \texttt{integrate(f, (x,a,b))} to compute the definite integrals of the form
 
 \noindent
 We can obtain the same area by first calculating the indefinite integral $F(c)=\int_0^c \!f(x)\,dx$,
-then using $A(a,b) = F(x)\big\vert_a^b \equiv F(b) - F(a)$:
+then using $A(a,b) = F(x)\big\vert_a^b = F(b) - F(a)$:
 
 
 
@@ -1283,11 +1237,11 @@ Draw a graph of $\sin(x)$ to see what is going on.
 \subsection{Fundamental theorem of calculus}
 \label{calculus:fundamental_theorem_of_calculus}
 																								\index{fundamental theorem of calculus}
-The integral is the ``inverse operation'' of the derivative.
+The integral is the ``inverse operation'' of the derivative.			\index{inverse!operation}
 If you perform the integral operation followed by the derivative operation on some function,
 you'll obtain the same function:
 \[
-  \left(\frac{d}{dx} \circ \int dx \right) f(x) \equiv \frac{d}{dx} \int_c^x f(u)\:du = f(x).
+  \left(\frac{d}{dx} \circ \int dx \right) f(x) = \frac{d}{dx} \int_c^x f(u)\:du = f(x).
 \]
 
 
@@ -1307,7 +1261,7 @@ x**2
 Alternately, if you compute the derivative of a function followed by the integral,
 you will obtain the original function $f(x)$ (up to a constant):
 \[
-  \left( \int dx \circ \frac{d}{dx}\right) f(x) \equiv \int_c^x f'(u)\;du = f(x) + C.
+  \left( \int dx \circ \frac{d}{dx}\right) f(x) = \int_c^x f'(u)\;du = f(x) + C.
 \]
 
 
@@ -1359,7 +1313,7 @@ Substitute the desired value of $n$ to see the value of the $n$\textsuperscript{
 
 \noindent
 %We can use 
-The \texttt{Python} list comprehension syntax \texttt{[item for item in list]}
+The Python list comprehension syntax \texttt{[item for item in list]}
 can be used to print the sequence values for some range of indices:
 
 
@@ -1400,12 +1354,12 @@ Both $a_n=\frac{1}{n}$ and $b_n = \frac{1}{n!}$ \emph{converge} to $0$ as $n\to\
 
 Many important math quantities are defined as limit expressions.
 An interesting example to consider is the number $\pi$,
-which is defined as the area of a circle of radius $1$.														\index{circle}
+which is defined as the area of a circle of radius $1$.	
 We can approximate the area of the unit circle by drawing a many-sided regular polygon around the circle.
 Splitting the $n$-sided regular polygon into identical triangular splices,
 we can obtain a formula for its area $A_n$\ifthenelse{\boolean{TUTORIAL}}{}{ (see solution to \textbf{P\ref{mathprob:octagon-approx-to-circle}})}.
 In the limit as $n\to \infty$, 
-the $n$-sided-polygon approximation to the area of the unit-circle becomes exact:
+the $n$-sided-polygon approximation to the area of the unit-circle becomes exact:		\index{approximation}
 
 \small
 \begin{verbatimtab}
@@ -1450,7 +1404,7 @@ The \texttt{summation} command is useful because it allows us to compute \emph{i
 but for most practical applications we don't need to take an infinite number of terms in a series to obtain a good approximation. 
 This is why series are so neat: they represent a great way to obtain approximations.
 
-Using standard \texttt{Python} commands,  
+Using standard Python commands,  
 we can obtain an approximation to $e$ that is accurate to six decimals by summing 10 terms in the series: 
 
 \small
@@ -1476,8 +1430,8 @@ The $n$\textsuperscript{th} term in a power series is a function of both the seq
 
 For example, the power series of the function $\exp(x)=e^x$ is 
 \[
- \exp(x) \equiv  1 + x + \frac{x^2}{2} + \frac{x^3}{3!} + \frac{x^4}{4!} + \frac{x^5}{5!} + \cdots         
-  =       \sum_{n=0}^\infty \frac{x^n}{n!}.
+ \exp(x)	=	1 + x + \frac{x^2}{2} + \frac{x^3}{3!} + \frac{x^4}{4!} + \frac{x^5}{5!} + \cdots         
+		= 	\sum_{n=0}^\infty \frac{x^n}{n!}.
 \]
 This is, IMHO, one of the most important ideas in calculus:
 you can compute the value of $\exp(5)$ by taking the infinite sum of the terms in the power series with $x=5$:
@@ -1594,31 +1548,26 @@ x - x**2/2 + x**3/3 - x**4/4 + x**5/5 + O(x**6)
 A vector $\vec{v} \in \mathbb{R}^n$ is an $n$-tuple of real numbers. 										\index{vector}
 For example, consider a vector that has three components:  
 \[
- \vec{v} = (v_1,v_2,v_3) \  \in \  (\mathbb{R},\mathbb{R},\mathbb{R}) \equiv \mathbb{R}^3.
+ \vec{v} = (v_1,v_2,v_3) \;  \in \; \mathbb{R}^3.
 \]
 To specify the vector $\vec{v}$, 
 we specify the values for its three components $v_1$, $v_2$, and $v_3$. 
 
 A matrix $A \in \mathbb{R}^{m\times n}$ is a rectangular array of real numbers with $m$ rows and $n$ columns.
-A vector is a special type of matrix; we can think of a vector $\vec{v}\in \mathbb{R}^n$
-either as a row vector ($1\times n$ matrix) or a column vector ($n \times 1$ matrix).
+A vector is a special type of matrix;
+you can think of the vector $\vec{v}\in \mathbb{R}^n$ as a $1\times n$ matrix.
 Because of this equivalence between vectors and matrices,
-there is no need for a special vector object in \texttt{SymPy}, 
-and \texttt{Matrix} objects are used for vectors as well.
+ in \texttt{SymPy} we use \texttt{Matrix} objects to represent vectors.
 
 This is how we define vectors and compute their properties:											\index{length}
 																						\index{unit vector}
 																						
 \small
 \begin{verbatimtab}
->>> u = Matrix([[4,5,6]]) # a row vector = 1x3 matrix
->>> v = Matrix([[7],
-                [8],      # a col vector = 3x1 matrix 
-                [9]])
->>> v.T                   # use the transpose operation to 
-Matrix([[7, 8, 9]])       # convert a col vec to a row vec
-
->>> u[0]                  # 0-based indexing for entries 
+>>> u = Matrix([4,5,6])   # a three-dimensional vector
+>>> u
+[4, 5, 6]
+>>> u[0]                  # 0-based indexing for components 
 4
 >>> u.norm()              # length of u 
 sqrt(77)
@@ -1639,9 +1588,9 @@ sqrt(77)
 The dot product of the $3$-vectors $\vec{u}$ and $\vec{v}$ can be defined two ways:						\index{dot product}
 \[
   \vec{u}\cdot\vec{v}
-  	\equiv 
+  	\eqdef 
 	\underbrace{u_xv_x+u_yv_y+u_zv_z}_{\textrm{algebraic def.}} 
-	\equiv 
+	=
 	\underbrace{\|\vec{u}\|\|\vec{v}\|\cos(\varphi)}_{\textrm{geometric def.}} 
 	\quad \in \mathbb{R},
 \]
@@ -1681,7 +1630,7 @@ Thanks to the dot product, however,
 we know the angle between the vectors is $52.76^\circ$,
 which means they \emph{kind of} point in the same direction.
 Vectors that are at an angle $\varphi=90^\circ$ are called \emph{orthogonal}, meaning at right angles with each other.
-The dot product of vectors for which $\varphi > 90^\circ$ is negative because they point \emph{mostly} in opposite directions.
+The dot product between two vectors is negative when the angle between them is $\varphi > 90^\circ$.
 
 The notion of the ``angle between vectors'' applies more generally to vectors with any number of dimensions.
 The dot product for $n$-dimensional vectors is $\vec{u}\cdot\vec{v}=\sum_{i=1}^n u_iv_i$.
@@ -1719,9 +1668,16 @@ The cross products of individual basis elements are defined as follows:
  \hat{\jmath}\times\hat{k} =\hat{\imath}, \qquad
  \hat{k}\times \hat{\imath}= \hat{\jmath}.
 \]
+The cross product is defined by the following equation:
+\[
+   \vec{u}\times\vec{v}=
+   \left( 
+     u_yv_z-u_zv_y, \; u_zv_x-u_xv_z, \; u_xv_y-u_yv_x 
+    \right).
+\]
 
 \noindent
-Here is how to compute the cross product of two vectors in \texttt{SymPy}:
+Here's how to compute the cross product of two vectors:
 \small
 \begin{verbatimtab}
 >>> u = Matrix([ 4,5,6])
@@ -1743,28 +1699,6 @@ and the sine of the angle between them:
 \normalsize
 
 \noindent
-The name ``cross product'' is well-suited for this operation
-since it is calculated by ``cross-multiplying'' the coefficients of the vectors:
-\[
-   \vec{u}\times\vec{v}=
-   \left( 
-     u_yv_z-u_zv_y, \ u_zv_x-u_xv_z, \ u_xv_y-u_yv_x 
-    \right).
-\]
-
-\noindent
-By defining individual symbols for the entries of two vectors,
-we can make \texttt{SymPy} show us the cross-product formula:
-\small
-\begin{verbatimtab}
->>> u1,u2,u3 = symbols('u1:4')
->>> v1,v2,v3 = symbols('v1:4')
->>> Matrix([u1,u2,u3]).cross(Matrix([v1,v2,v3]))
-[ (u2*v3 - u3*v2), (-u1*v3 + u3*v1), (u1*v2 - u2*v1) ]
-\end{verbatimtab}
-\normalsize
-
-\noindent
 The cross product is anticommutative, $\vec{u}\times\vec{v} = -\vec{v}\times\vec{u}$:
 \small
 \begin{verbatimtab}
@@ -1776,8 +1710,14 @@ The cross product is anticommutative, $\vec{u}\times\vec{v} = -\vec{v}\times\vec
 \normalsize
 
 \noindent
-The product of two numbers and the dot product of two vectors are commutative operations.					\index{commutative}
-The cross product, however, is not commutative: $\vec{u}\times\vec{v} \neq \vec{v}\times\vec{u}$.
+
+Watch out for this, because it's a new thing.
+The product of two numbers $a$ and $b$ is commutative: $ab = ba$.			\index{commutative}
+The dot product of two vectors $\vec{u}$ and $\vec{v}$ is commutative: $\vec{u}\cdot\vec{v} = \vec{v}\cdot\vec{u}$.
+However the cross product is not commutative: $\vec{u}\times\vec{v} \neq \vec{v}\times\vec{u}$,
+it is anticommutative: $\vec{u}\times\vec{v} = -\vec{v}\times\vec{u}$.
+%Sandy said: Hmmm....we're not really supposed to have more than one colon per sentence...is this an informal use case? Or do we want to fully respect the grammar?
+% 	@Sandy:   yes let's go with informal rule-breaking-double-: exception since it's in technical appendix (people already scared by the math, but now code + math = very little ppl read this far ;)
 
 
 
@@ -1805,11 +1745,11 @@ Compute $\vec{F}_{\textrm{net}}=\vec{F}_1 + \vec{F}_2$,
 where $\vec{F}_1=4\hat{\imath}$[N] and $\vec{F}_2 = 5\angle 30^\circ$[N]:
 \small
 \begin{verbatimtab}
->>> F_1 =  Matrix( [4,0] ) 
->>> F_2 =  Matrix( [5*cos(30*pi/180), 5*sin(30*pi/180) ] )
+>>> F_1 = Matrix( [4,0] ) 
+>>> F_2 = Matrix( [5*cos(30*pi/180), 5*sin(30*pi/180) ] )
 >>> F_net = F_1 + F_2
 >>> F_net 
-[4 + 5*sqrt(3)/2,   5/2]          # in Newtons 
+[4 + 5*sqrt(3)/2,   5/2]
 >>> F_net.evalf()
 [8.33012701892219,  2.5]          # in Newtons 
 \end{verbatimtab}
@@ -1817,10 +1757,8 @@ where $\vec{F}_1=4\hat{\imath}$[N] and $\vec{F}_2 = 5\angle 30^\circ$[N]:
 
 \noindent
 To express the answer in length-and-direction notation,
-use \texttt{norm} to find the length of $\vec{F}_{\textrm{net}}$
-and \texttt{atan2}\footnote{The function \texttt{atan2(y,x)} computes the correct direction 
-for all vectors $(x,y)$, unlike \texttt{atan(y/x)} which requires corrections for angles in the range $[\frac{\pi}{2}, \frac{3\pi}{2}]$.}
-to find its direction:
+use \texttt{norm} to find the length of $\vec{F}_{\textrm{net}}$,
+and use the two-input inverse tangent function \texttt{atan2} to compute the  direction:
 \small
 \begin{verbatimtab}
 >>> F_net.norm().evalf()
@@ -1847,7 +1785,7 @@ Together $x(t)$, $v(t)$, and $a(t)$ are known as the \emph{equations of motion} 
 	\[
 	  a(t) \overset{\frac{d}{dt} }{\longleftarrow} v(t) \overset{\frac{d}{dt} }{\longleftarrow} x(t).
 	\]
-	Assume we know the initial position $x_i\equiv x(0)$ and the initial velocity $v_i\equiv v(0)$ of the object 
+	Assume we know the initial position $x_i\eqdef x(0)$ and the initial velocity $v_i\eqdef v(0)$ of the object 
 	and we want to find $x(t)$ for all later times.
 	We can do this starting from the dynamics of the problem---the forces acting on the object.
 
@@ -1857,7 +1795,11 @@ Together $x(t)$, $v(t)$, and $a(t)$ are known as the \emph{equations of motion} 
 	Starting from the knowledge of $a(t)$, we can obtain $v(t)$ by integrating
 	then find $x(t)$ by integrating $v(t)$:
 	\[
-	a(t) \ \ \ \overset{v_i+ \int\!dt }{\longrightarrow} \ \ \ v(t) \ \ \ \overset{x_i+ \int\!dt }{\longrightarrow} \ \ \ x(t).
+		a(t)
+		\; \; \; \overset{v_i+ \int\!dt }{\longrightarrow} \; \; \;
+		v(t)
+		\; \; \; \overset{x_i+ \int\!dt }{\longrightarrow} \; \; \;
+		x(t).
 	\]
 	The reasoning follows from the fundamental theorem of calculus:
 	if $a(t)$ represents the change in $v(t)$, 
@@ -1871,8 +1813,15 @@ Together $x(t)$, $v(t)$, and $a(t)$ are known as the \emph{equations of motion} 
 	we can compute $a(t)=\frac{ \vec{F}_{\textrm{net}} }{ m }$,
 	then obtain $v(t)$ by integrating $a(t)$, and finally obtain $x(t)$ by integrating $v(t)$:
 	\[
-	\underbrace{\frac{ \vec{F}_{\textrm{net}} }{ m }  = a(t)}_{\textrm{Newton's 2\textsuperscript{nd} law}} 
-	\underbrace{ \overset{v_i+ \int\!dt }{\longrightarrow} \ \ \ v(t) \ \ \ \overset{x_i+ \int\!dt }{\longrightarrow} \ \ \ x(t).}_{\textrm{kinematics}}
+		\underbrace{
+			\frac{ \vec{F}_{\textrm{net}} }{ m }  = a(t)
+		}_{\textrm{Newton's 2\textsuperscript{nd} law}} 
+		\underbrace{ \overset{v_i+ \int\!dt }{\longrightarrow}
+			\; \; \;
+			v(t)
+			\; \; \; \overset{x_i+ \int\!dt }{\longrightarrow} \; \; \;
+			x(t).
+		}_{\textrm{kinematics}}
 	\]
 
 }
@@ -1915,9 +1864,9 @@ which relates the object's final velocity to the initial velocity,
 the displacement, and the acceleration, without reference to time:
 \small
 \begin{verbatimtab}
->>> (v*v).expand()
+>>> expand(v*v)
 a**2*t**2 + 2*a*t*v_i + v_i**2
->>> ((v*v).expand() - 2*a*x).simplify()
+>>> simplify(expand(v*v) - 2*a*x)
 -2*a*x_i + v_i**2
 \end{verbatimtab}
 \normalsize
@@ -1926,14 +1875,10 @@ a**2*t**2 + 2*a*t*v_i + v_i**2
 The above calculation shows $v_f^2 - 2ax_f = -2ax_i + v_i^2$.
 After moving the term $2ax_f$ to the other side of the equation, we obtain
 \begin{align*}
- (v(t))^2 \ = \ v_f^2 =  v_i^2  + 2a\Delta x \ = \  v_i^2  + 2a(x_f-x_i).
+ (v(t))^2 \; = \; v_f^2 =  v_i^2  + 2a\Delta x \; = \;  v_i^2  + 2a(x_f-x_i).
 \end{align*}  
 The fourth equation is important for practical purposes
 because it allows us to solve physics problems without using the time variable.
-%It's also important for theoretical purposes
-%since it resembles an \emph{energy calculation}.
-%Indeed, if you multiply the fourth equation by $\frac{1}{2}m$,
-%you'll obtain conservation of energy equation: $K_f = K_i + mg\Delta h$.
 
 
 \subsubsection{Example}
@@ -1947,8 +1892,9 @@ What is the object's velocity at $t=3$[s]?
 \begin{verbatimtab}
 >>> x_i = 20   # initial position
 >>> v_i = 10   # initial velocity
->>> a   = 5    # acceleration (constant during motion)
->>> x = x_i + integrate(  v_i+integrate(a,(t,0,t)),  (t,0,t) )   
+>>> a = 5      # acceleration (constant during motion)
+>>> v = v_i + integrate(a, (t,0,t))
+>>> x = x_i + integrate(v, (t,0,t))   
 >>> x
 5*t**2/2 + 10*t + 20
 >>> x.subs({t:3}).n()           # x(3) in [m]
@@ -1967,26 +1913,21 @@ physics knowledge combined with computer skills is like a superpower!
 \label{mechanics:general_eqns_of_motion}
 
 The procedure 
-$a(t) \ \overset{v_i+ \int\!dt }{\longrightarrow} \ v(t) \ \overset{x_i+ \int\!dt }{\longrightarrow} \ x(t)$
+$a(t) \; \overset{v_i+ \int\!dt }{\longrightarrow} \; v(t) \; \overset{x_i+ \int\!dt }{\longrightarrow} \; x(t)$
 can be used to obtain the position function $x(t)$ even when the acceleration is not constant.
 Suppose the acceleration of an object is $a(t)=\sqrt{k t}$; 
 what is its $x(t)$?
-%then its %velocity and its 
-%position function is:
 
 \small
 \begin{verbatimtab}
 >>> t, v_i, x_i, k = symbols('t v_i x_i k')
 >>> a = sqrt(k*t)
->>> x = x_i + integrate( v_i+integrate(a,(t,0,t)), (t, 0,t) )
+>>> v = v_i + integrate(a, (t,0,t))
+>>> x = x_i + integrate(v, (t,0,t))
 >>> x
 x_i + v_i*t + (4/15)*(k*t)**(5/2)/k**2 
 \end{verbatimtab}
 \normalsize
-
-%>>> v = v_i + integrate(a, (t, 0,t) )
-%>>> v
-%v_i + 2*(k*t)**(3/2)/(3*k)
 
 
 
@@ -1999,7 +1940,7 @@ Instead of working with the kinematic equations of motion $x(t)$, $v(t)$, and $a
 we can solve physics problems using \emph{energy} calculations.
 A key connection between the world of forces and the world of energy is the concept of \emph{potential energy}.
 If you move an object against a conservative force (think raising a ball in the air against the force of gravity),
-you can think of the work you do agains the force as being stored in the potential energy of the object.
+you can think of the work you do against the force as being stored in the potential energy of the object.
 }{}
 
 For each force $\vec{F}(x)$ there is a corresponding potential energy $U_F(x)$.					\index{potential energy} \index{energy!potential} 
@@ -2027,7 +1968,7 @@ k*x**2/2                   # Spring potential energy
 
 \noindent
 Note the negative sign in the formula defining the potential energy.
-This negative is canceled by the negative sign of the dot product $\vec{F}\cdot d\vec{x}$:
+This negative is cancelled by the negative sign of the dot product $\vec{F}\cdot d\vec{x}$:
 when the force acts in the direction opposite to the displacement, 
 the work done by the force is negative.
 
@@ -2077,7 +2018,7 @@ We can use the \texttt{expand} function with the argument \texttt{trig=True} to 
 \small
 \begin{verbatimtab}
 >>> A, phi = symbols("A phi")
->>> (A*cos(w*t - phi)).expand(trig=True)
+>>> expand(A*cos(w*t - phi), trig=True)
 A*sin(phi)*sin(w*t) + A*cos(phi)*cos(w*t)
 \end{verbatimtab}
 \normalsize
@@ -2120,29 +2061,47 @@ A*cos(t*w)
 \section*{Conclusion}
 % \label{sec:sympytut_conclusion}
 
-	I'll conclude with some words of caution about computer overuse.
-	Computer technology is very powerful and is everywhere around us,
-	but we must not forget that computers are actually very dumb.
-	Computers are merely calculators, and they depend on your knowledge to direct them.
-	It's important you learn how to perform complicated math by hand in order to be able to
-	instruct computers to execute math for you, and so you can check the results of your computer calculations.
-	I don't want you to use the tricks you learned in this tutorial to avoid math problems
-	and blindly rely on \texttt{SymPy} for all your math needs. That won't work!
-	The idea is for both you and the computer to be math powerhouses.
-	%The computer will help you with tedious calculations (they're good at that)
-	%and you'll help the computer by guiding it when it gets  stuck (humans are good at that).
-	
-	Most math discoveries were made using pen and paper.
-	When solving a math problem, if you clearly define each variable,
-	draw a diagram, and clearly set up the problem's equations in terms of the variables you defined,
-	then half the work of solving the problem is done.
+	I'll conclude with some words of warning about technological dependence.
+	Computer technology is very powerful and everywhere around us,
+	but we must not forget that computers are merely calculators that depend on human commands to direct them.
+	This means it's important for you to learn how to do math ``by hand'' first,
+	in order to know how to instruct computers to do the math for you.
+
+	% CAUTION
+	I don't want you to use the tricks you learned in this tutorial to avoid learning how to do math
+	and blindly rely on \texttt{SymPy} to do math calculations for you.
+	That's not a good idea!
+	I'll be very disappointed if you use \texttt{SymPy} to skip the ``intellectual suffering''
+	necessary to learn the new math concepts like numbers, equations, functions, etc.
+	That's what math is all about---understand math concepts and the relationships between concepts.
+	The part that is about rote memorized of math calculations procedures that you should have learned at school is not important at all.
+	The tedious and repetitive math calculations is precisely what can be ``outsourced'' to \texttt{SymPy}.
+
+
+	% PROBLEM SOLVING STRATEGY
+	To solve problems in math (or physics, chemistry, biology, etc.)
+	the most important things are to:
+	A) define the variables relevant for the problem,
+	B) draw a diagram,
+	and C) clearly set up the problem's equations in terms of the variables you defined.
+	With these steps in place,
+	half the work of solving the problem is already done!
 	Computers can't help with these important,
 	initial modelling and problem-specific tasks---only humans are good at this stuff.
-	Once you \emph{set up} the problem,
-	\texttt{SymPy} can help you breeze through tedious calculations.
-	The combination of pen and paper for thinking and \texttt{SymPy} for calculating is indeed quite powerful.
+	Once you set up the problem (A, B, C),
+	\texttt{SymPy} can help you breeze through any subsequent calculations that might be necessary to obtain the final answer.
+
+	% HISTORICAL PROOF = INSPIRATIONAL STATEMENT
+	Most of the big math and science discoveries were made using pen and paper,
+	which shows that scribbling on paper is a useful as a tool for thinking.
+	With what you learned about \texttt{SymPy},
+	you now have access to the combination of pencil and paper for thinking and \texttt{SymPy} for calculating.
+	It's a very powerful combination!
+	What is a real-world problem you'd like to solve?
+	Try modelling the problem using math equations and see what happens.
 	Go out there and do some science!
-	
+
+
 	% ---- using sympy shoulders of giants, but understanding the equations  makes you a math giant!
 	
 
